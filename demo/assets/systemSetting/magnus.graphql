@@ -1,0 +1,223 @@
+scalar Double
+
+scalar Float
+
+scalar Int32
+
+scalar Int64
+
+scalar Uint32
+
+scalar Sint32
+
+scalar Fixed32
+
+scalar Sfixed32
+
+scalar Uint64
+
+scalar Sint64
+
+scalar Fixed64
+
+scalar Sfixed64
+
+scalar Bool
+
+scalar Bytes
+
+scalar Empty
+
+scalar Error
+
+scalar Json
+
+scalar Timestamp
+
+scalar Date
+
+type SetResult {
+  code: Int!
+  message: String
+}
+
+input SetInput {
+  key: String!
+  data: String!
+}
+
+type GetResult {
+  code: Int!
+  message: String
+  data: String!
+}
+
+input GetInput {
+  key: String!
+}
+
+type SaveDomainResult {
+  "返回码"
+  code: Int!
+  "返回信息"
+  message: String!
+}
+
+"保存域输入"
+input SaveDomainInput {
+  "域id"
+  id: Int
+  "域编号"
+  code: String
+  "域标题"
+  title: String
+  "域简称"
+  desc: String
+}
+
+type GetDoaminData {
+  "域编号"
+  id: Int!
+  "域编码"
+  code: String!
+  "域名称"
+  title: String!
+  "域简称"
+  desc: String!
+  "创建日期"
+  createDate: String!
+  "创建人"
+  createUserName: String!
+  "创建人id"
+  createUserId: Int!
+  "状态"
+  status: Int!
+}
+
+type GetDomainResult {
+  "返回码"
+  code: Int!
+  "返回信息"
+  message: String!
+  "返回数据"
+  data: GetDoaminData
+}
+
+input GetDoaminInput {
+  "域编号"
+  id: Int!
+}
+
+type FindDomainData {
+  "域编号"
+  id: Int!
+  "域标题"
+  title: String!
+  "域编号"
+  code: String!
+  "域状态"
+  status: Int!
+  "创建日期"
+  createDate: String!
+  "创建人"
+  createrUserName: String
+  "创建人Id"
+  createUserId: String!
+}
+
+type FindDomainResult {
+  "返回码"
+  code: Int!
+  "返回信息"
+  message: String!
+  "返回数据"
+  data: [FindDomainData]
+}
+
+input FindDomainInput {
+  "页码"
+  page: Int!
+  "尺寸"
+  psize: Int!
+  "标题"
+  title: String!
+  "编号"
+  code: String!
+}
+
+"伪删除域"
+type DeleteDomainResult {
+  "状态码"
+  code: Int!
+  "返回信息"
+  message: String!
+}
+
+input DeleteDomainInput {
+  id: Int!
+}
+
+"用户禁用"
+type ForBidDomainResult {
+  "状态码"
+  code: Int!
+  "返回信息"
+  message: String!
+}
+
+input ForBidDomainInput {
+  "域id"
+  id: Int!
+}
+
+type SaveMenuResult {
+  "返回码"
+  code: Int!
+  "返回信息"
+  message: String!
+}
+
+input SaveMenuInput {
+  "菜单id"
+  id: Int!
+  "状态"
+  status: Int
+}
+
+type FindMenuResultData {
+  "菜单标题"
+  title: String!
+  "子级"
+  children: [FindMenuResultData]
+}
+
+type FindMenuResult {
+  "返回码"
+  code: Int!
+  "返回信息"
+  message: String!
+  "返回数据"
+  data: [FindMenuResultData]
+}
+
+input FindMenuInput {
+  "菜单名称"
+  title: String!
+  "状态"
+  status: Int
+}
+
+type SystemSetting {
+  set(item: SetInput!): SetResult
+  get(item: GetInput!): GetResult
+}
+
+type SystemService {
+  saveDomin(domin: SaveDomainInput!): SaveDomainResult
+  getDomain(entity: GetDoaminInput!): GetDomainResult
+  findDomain(entity: FindDomainInput!): FindDomainResult
+  deleteDomain(entity: DeleteDomainInput!): DeleteDomainResult
+  forbidDomain(entity: ForBidDomainInput!): ForBidDomainResult
+  saveMenu(menu: SaveMenuInput!): SaveMenuResult
+  findMenu(menu: FindMenuInput!): FindMenuResult
+}

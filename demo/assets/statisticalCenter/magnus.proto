@@ -1,0 +1,83 @@
+package statisticalCenter;
+syntax = "proto3";
+message Empty{
+}
+message Event{
+	string title = 0;
+	string desc = 1;
+	int32 count = 2;
+}
+message Module{
+	string title = 0;
+	repeated Event events = 1;
+}
+message GetUserToDoItemsByStartAndEndResult{
+	repeated Module list = 0;
+}
+message GetUserToDoItemsByStartAndEndInput{
+	int32 uid = 0;
+	string start = 1;
+	string end = 2;
+}
+service StatisticalCenter {
+	rpc GetUserToDoItemsByStartAndEnd(GetUserToDoItemsByStartAndEndInput) returns(GetUserToDoItemsByStartAndEndResult) {}
+}
+message FindRolePermission{
+	int32 id = 0;
+	string title = 1;
+}
+message FindRoleDate{
+	int32 id = 0;
+	string roleName = 1;
+	string roleIdentification = 2;
+	string roleDesc = 3;
+	repeated FindRolePermission dataPermission = 4;
+	string createUserName = 5;
+	int32 parentRoleId = 6;
+	string parentRoleName = 7;
+	string createDate = 8;
+}
+message FindRoleResult{
+	int32 code = 0;
+	string message = 1;
+	repeated FindRoleDate data = 2;
+}
+message FindRoleInput{
+	int32 page = 0;
+	int32 psize = 1;
+	string roleName = 2;
+	string createUserUsername = 3;
+	Empty createDate = 4;
+}
+message Role{
+	string title = 0;
+	int32 id = 1;
+}
+message SaveResultData{
+	int32 id = 0;
+	string roleName = 1;
+	string roleIdentification = 2;
+	string roleDescription = 3;
+	repeated Role basicRole = 4;
+	repeated Role mutexRole = 5;
+	int32 status = 6;
+	int32 createDate = 7;
+	string createUserName = 8;
+}
+message SaveRoleResult{
+	int32 code = 0;
+	string message = 1;
+	SaveResultData data = 2;
+}
+message SaveRoleInput{
+	int32 id = 0;
+	string roleName = 1;
+	string roleIdentification = 2;
+	string roleDescription = 3;
+	repeated int32 basicRole = 4;
+	repeated int32 mutexRole = 5;
+}
+service RoleController {
+	rpc FindRole(FindRoleInput) returns(FindRoleResult) {}
+	rpc SaveRole(SaveRoleInput) returns(SaveRoleResult) {}
+}

@@ -1,0 +1,1129 @@
+{
+  "Role": [
+    [
+      "getSystemRights",
+      "Role",
+      "Role",
+      "getSystemRights",
+      []
+    ]
+  ],
+  "Department": [
+    [
+      "getChildren",
+      "Department",
+      "Department",
+      "getChildren",
+      []
+    ],
+    [
+      "getStations",
+      "Department",
+      "Department",
+      "getStations",
+      []
+    ]
+  ],
+  "Domain": [
+    [
+      "getDepartments",
+      "Domain",
+      "Domain",
+      "getDepartments",
+      []
+    ]
+  ],
+  "Station": [
+    [
+      "getUsers",
+      "Station",
+      "Station",
+      "getUsers",
+      []
+    ]
+  ],
+  "RoleGroup": [
+    [
+      "getRoles",
+      "RoleGroup",
+      "RoleGroup",
+      "getRoles",
+      []
+    ],
+    [
+      "getStations",
+      "RoleGroup",
+      "RoleGroup",
+      "getStations",
+      []
+    ]
+  ],
+  "System": [
+    [
+      "getSystemRights",
+      "System",
+      "System",
+      "getSystemRights",
+      []
+    ],
+    [
+      "getSystemEvents",
+      "System",
+      "System",
+      "getSystemEvents",
+      []
+    ],
+    [
+      "getToDoItems",
+      "System",
+      "System",
+      "getToDoItems",
+      []
+    ]
+  ],
+  "SystemEvent": [
+    [
+      "getToDoItems",
+      "SystemEvent",
+      "SystemEvent",
+      "getToDoItems",
+      []
+    ]
+  ],
+  "User": [
+    [
+      "getToDoItems",
+      "User",
+      "User",
+      "getToDoItems",
+      [
+        {
+          "name": "selection",
+          "type": "Json!",
+          "index": 0,
+          "decorator": "Selection"
+        },
+        {
+          "name": "where",
+          "type": "ToDoItemInputWhere",
+          "index": 1
+        },
+        {
+          "name": "order",
+          "type": "ToDoItemInputOrder",
+          "index": 2
+        },
+        {
+          "name": "limit",
+          "type": "PageLimitInput",
+          "index": 3
+        }
+      ]
+    ],
+    [
+      "getStations",
+      "User",
+      "User",
+      "getStations",
+      [
+        {
+          "name": "where",
+          "type": "StationInputWhere",
+          "index": 0
+        },
+        {
+          "name": "order",
+          "type": "StationInputOrder",
+          "index": 1
+        },
+        {
+          "name": "limit",
+          "type": "PageLimitInput",
+          "index": 2
+        }
+      ]
+    ],
+    [
+      "getUserLoginLogs",
+      "User",
+      "User",
+      "getUserLoginLogs",
+      [
+        {
+          "name": "where",
+          "type": "UserLoginLogInputWhere",
+          "index": 0
+        },
+        {
+          "name": "order",
+          "type": "UserLoginLogInputOrder",
+          "index": 1
+        },
+        {
+          "name": "limit",
+          "type": "PageLimitInput",
+          "index": 2
+        }
+      ]
+    ],
+    [
+      "getSafetyScoreLogs",
+      "User",
+      "User",
+      "getSafetyScoreLogs",
+      [
+        {
+          "name": "where",
+          "type": "SafetyScoreLogInputWhere",
+          "index": 0
+        },
+        {
+          "name": "order",
+          "type": "SafetyScoreLogInputOrder",
+          "index": 1
+        },
+        {
+          "name": "limit",
+          "type": "PageLimitInput",
+          "index": 2
+        }
+      ]
+    ],
+    [
+      "getCreateStations",
+      "User",
+      "User",
+      "getCreateStations",
+      [
+        {
+          "name": "where",
+          "type": "StationInputWhere",
+          "index": 0
+        },
+        {
+          "name": "order",
+          "type": "StationInputOrder",
+          "index": 1
+        },
+        {
+          "name": "limit",
+          "type": "PageLimitInput",
+          "index": 2
+        }
+      ]
+    ]
+  ],
+  "SafetyScoreRule": [
+    [
+      "getSafetyScoreLogs",
+      "SafetyScoreRule",
+      "SafetyScoreRule",
+      "getSafetyScoreLogs",
+      []
+    ]
+  ],
+  "query": [
+    [
+      "getUser",
+      "Controller",
+      "User",
+      "get",
+      [
+        {
+          "name": "entity",
+          "type": "UserInputWhere!",
+          "index": 0
+        }
+      ]
+    ],
+    [
+      "getSystem",
+      "Controller",
+      "System",
+      "get",
+      [
+        {
+          "name": "entity",
+          "type": "SystemInputWhere!",
+          "index": 0
+        }
+      ]
+    ],
+    [
+      "getSystemEvent",
+      "Controller",
+      "SystemEvent",
+      "get",
+      [
+        {
+          "name": "entity",
+          "type": "SystemEventInputWhere!",
+          "index": 0
+        }
+      ]
+    ],
+    [
+      "getSystemRight",
+      "Controller",
+      "SystemRight",
+      "get",
+      [
+        {
+          "name": "entity",
+          "type": "SystemRightInputWhere!",
+          "index": 0
+        }
+      ]
+    ],
+    [
+      "getDepartment",
+      "Controller",
+      "Department",
+      "get",
+      [
+        {
+          "name": "entity",
+          "type": "DepartmentInputWhere!",
+          "index": 0
+        }
+      ]
+    ],
+    [
+      "getRole",
+      "Controller",
+      "Role",
+      "get",
+      [
+        {
+          "name": "entity",
+          "type": "RoleInputWhere!",
+          "index": 0
+        }
+      ]
+    ],
+    [
+      "getStation",
+      "Controller",
+      "Station",
+      "get",
+      [
+        {
+          "name": "entity",
+          "type": "StationInputWhere!",
+          "index": 0
+        }
+      ]
+    ],
+    [
+      "getToDoItem",
+      "Controller",
+      "ToDoItem",
+      "get",
+      [
+        {
+          "name": "entity",
+          "type": "ToDoItemInputWhere!",
+          "index": 0
+        }
+      ]
+    ],
+    [
+      "getRoleGroup",
+      "Controller",
+      "RoleGroup",
+      "get",
+      [
+        {
+          "name": "entity",
+          "type": "RoleGroupInputWhere!",
+          "index": 0
+        }
+      ]
+    ],
+    [
+      "getUserLoginLog",
+      "Controller",
+      "UserLoginLog",
+      "get",
+      [
+        {
+          "name": "entity",
+          "type": "UserLoginLogInputWhere!",
+          "index": 0
+        }
+      ]
+    ],
+    [
+      "getSafetyScoreLog",
+      "Controller",
+      "SafetyScoreLog",
+      "get",
+      [
+        {
+          "name": "entity",
+          "type": "SafetyScoreLogInputWhere!",
+          "index": 0
+        }
+      ]
+    ],
+    [
+      "getSafetyScoreRule",
+      "Controller",
+      "SafetyScoreRule",
+      "get",
+      [
+        {
+          "name": "entity",
+          "type": "SafetyScoreRuleInputWhere!",
+          "index": 0
+        }
+      ]
+    ],
+    [
+      "findUser",
+      "Controller",
+      "User",
+      "find",
+      [
+        {
+          "name": "entity",
+          "type": "UserInputWhere!",
+          "index": 0
+        },
+        {
+          "name": "order",
+          "type": "UserInputOrder!",
+          "index": 1
+        },
+        {
+          "name": "limit",
+          "type": "PageLimitInput",
+          "index": 2
+        }
+      ]
+    ],
+    [
+      "findSystem",
+      "Controller",
+      "System",
+      "find",
+      [
+        {
+          "name": "entity",
+          "type": "SystemInputWhere!",
+          "index": 0
+        },
+        {
+          "name": "order",
+          "type": "SystemInputOrder!",
+          "index": 1
+        },
+        {
+          "name": "limit",
+          "type": "PageLimitInput",
+          "index": 2
+        }
+      ]
+    ],
+    [
+      "findSystemEvent",
+      "Controller",
+      "SystemEvent",
+      "find",
+      [
+        {
+          "name": "entity",
+          "type": "SystemEventInputWhere!",
+          "index": 0
+        },
+        {
+          "name": "order",
+          "type": "SystemEventInputOrder!",
+          "index": 1
+        },
+        {
+          "name": "limit",
+          "type": "PageLimitInput",
+          "index": 2
+        }
+      ]
+    ],
+    [
+      "findSystemRight",
+      "Controller",
+      "SystemRight",
+      "find",
+      [
+        {
+          "name": "entity",
+          "type": "SystemRightInputWhere!",
+          "index": 0
+        },
+        {
+          "name": "order",
+          "type": "SystemRightInputOrder!",
+          "index": 1
+        },
+        {
+          "name": "limit",
+          "type": "PageLimitInput",
+          "index": 2
+        }
+      ]
+    ],
+    [
+      "findDepartment",
+      "Controller",
+      "Department",
+      "find",
+      [
+        {
+          "name": "entity",
+          "type": "DepartmentInputWhere!",
+          "index": 0
+        },
+        {
+          "name": "order",
+          "type": "DepartmentInputOrder!",
+          "index": 1
+        },
+        {
+          "name": "limit",
+          "type": "PageLimitInput",
+          "index": 2
+        }
+      ]
+    ],
+    [
+      "findRole",
+      "Controller",
+      "Role",
+      "find",
+      [
+        {
+          "name": "entity",
+          "type": "RoleInputWhere!",
+          "index": 0
+        },
+        {
+          "name": "order",
+          "type": "RoleInputOrder!",
+          "index": 1
+        },
+        {
+          "name": "limit",
+          "type": "PageLimitInput",
+          "index": 2
+        }
+      ]
+    ],
+    [
+      "findStation",
+      "Controller",
+      "Station",
+      "find",
+      [
+        {
+          "name": "entity",
+          "type": "StationInputWhere!",
+          "index": 0
+        },
+        {
+          "name": "order",
+          "type": "StationInputOrder!",
+          "index": 1
+        },
+        {
+          "name": "limit",
+          "type": "PageLimitInput",
+          "index": 2
+        }
+      ]
+    ],
+    [
+      "findToDoItem",
+      "Controller",
+      "ToDoItem",
+      "find",
+      [
+        {
+          "name": "entity",
+          "type": "ToDoItemInputWhere!",
+          "index": 0
+        },
+        {
+          "name": "order",
+          "type": "ToDoItemInputOrder!",
+          "index": 1
+        },
+        {
+          "name": "limit",
+          "type": "PageLimitInput",
+          "index": 2
+        }
+      ]
+    ],
+    [
+      "findRoleGroup",
+      "Controller",
+      "RoleGroup",
+      "find",
+      [
+        {
+          "name": "entity",
+          "type": "RoleGroupInputWhere!",
+          "index": 0
+        },
+        {
+          "name": "order",
+          "type": "RoleGroupInputOrder!",
+          "index": 1
+        },
+        {
+          "name": "limit",
+          "type": "PageLimitInput",
+          "index": 2
+        }
+      ]
+    ],
+    [
+      "findUserLoginLog",
+      "Controller",
+      "UserLoginLog",
+      "find",
+      [
+        {
+          "name": "entity",
+          "type": "UserLoginLogInputWhere!",
+          "index": 0
+        },
+        {
+          "name": "order",
+          "type": "UserLoginLogInputOrder!",
+          "index": 1
+        },
+        {
+          "name": "limit",
+          "type": "PageLimitInput",
+          "index": 2
+        }
+      ]
+    ],
+    [
+      "findSafetyScoreLog",
+      "Controller",
+      "SafetyScoreLog",
+      "find",
+      [
+        {
+          "name": "entity",
+          "type": "SafetyScoreLogInputWhere!",
+          "index": 0
+        },
+        {
+          "name": "order",
+          "type": "SafetyScoreLogInputOrder!",
+          "index": 1
+        },
+        {
+          "name": "limit",
+          "type": "PageLimitInput",
+          "index": 2
+        }
+      ]
+    ],
+    [
+      "findSafetyScoreRule",
+      "Controller",
+      "SafetyScoreRule",
+      "find",
+      [
+        {
+          "name": "entity",
+          "type": "SafetyScoreRuleInputWhere!",
+          "index": 0
+        },
+        {
+          "name": "order",
+          "type": "SafetyScoreRuleInputOrder!",
+          "index": 1
+        },
+        {
+          "name": "limit",
+          "type": "PageLimitInput",
+          "index": 2
+        }
+      ]
+    ],
+    [
+      "deleteUser",
+      "Controller",
+      "User",
+      "delete",
+      [
+        {
+          "name": "id",
+          "type": "Int!",
+          "index": 0
+        }
+      ]
+    ],
+    [
+      "deleteSystem",
+      "Controller",
+      "System",
+      "delete",
+      [
+        {
+          "name": "id",
+          "type": "Int!",
+          "index": 0
+        }
+      ]
+    ],
+    [
+      "deleteSystemEvent",
+      "Controller",
+      "SystemEvent",
+      "delete",
+      [
+        {
+          "name": "id",
+          "type": "Int!",
+          "index": 0
+        }
+      ]
+    ],
+    [
+      "deleteSystemRight",
+      "Controller",
+      "SystemRight",
+      "delete",
+      [
+        {
+          "name": "id",
+          "type": "Int!",
+          "index": 0
+        }
+      ]
+    ],
+    [
+      "deleteDepartment",
+      "Controller",
+      "Department",
+      "delete",
+      [
+        {
+          "name": "id",
+          "type": "Int!",
+          "index": 0
+        }
+      ]
+    ],
+    [
+      "deleteRole",
+      "Controller",
+      "Role",
+      "delete",
+      [
+        {
+          "name": "id",
+          "type": "Int!",
+          "index": 0
+        }
+      ]
+    ],
+    [
+      "deleteStation",
+      "Controller",
+      "Station",
+      "delete",
+      [
+        {
+          "name": "id",
+          "type": "Int!",
+          "index": 0
+        }
+      ]
+    ],
+    [
+      "deleteToDoItem",
+      "Controller",
+      "ToDoItem",
+      "delete",
+      [
+        {
+          "name": "id",
+          "type": "Int!",
+          "index": 0
+        }
+      ]
+    ],
+    [
+      "deleteRoleGroup",
+      "Controller",
+      "RoleGroup",
+      "delete",
+      [
+        {
+          "name": "id",
+          "type": "Int!",
+          "index": 0
+        }
+      ]
+    ],
+    [
+      "deleteUserLoginLog",
+      "Controller",
+      "UserLoginLog",
+      "delete",
+      [
+        {
+          "name": "id",
+          "type": "Int!",
+          "index": 0
+        }
+      ]
+    ],
+    [
+      "deleteSafetyScoreLog",
+      "Controller",
+      "SafetyScoreLog",
+      "delete",
+      [
+        {
+          "name": "id",
+          "type": "Int!",
+          "index": 0
+        }
+      ]
+    ],
+    [
+      "deleteSafetyScoreRule",
+      "Controller",
+      "SafetyScoreRule",
+      "delete",
+      [
+        {
+          "name": "id",
+          "type": "Int!",
+          "index": 0
+        }
+      ]
+    ]
+  ],
+  "mutation": [
+    [
+      "saveUser",
+      "Controller",
+      "User",
+      "save",
+      [
+        {
+          "name": "entity",
+          "type": "UserInput!",
+          "index": 0
+        }
+      ]
+    ],
+    [
+      "saveSystem",
+      "Controller",
+      "System",
+      "save",
+      [
+        {
+          "name": "entity",
+          "type": "SystemInput!",
+          "index": 0
+        }
+      ]
+    ],
+    [
+      "saveSystemEvent",
+      "Controller",
+      "SystemEvent",
+      "save",
+      [
+        {
+          "name": "entity",
+          "type": "SystemEventInput!",
+          "index": 0
+        }
+      ]
+    ],
+    [
+      "saveSystemRight",
+      "Controller",
+      "SystemRight",
+      "save",
+      [
+        {
+          "name": "entity",
+          "type": "SystemRightInput!",
+          "index": 0
+        }
+      ]
+    ],
+    [
+      "saveDepartment",
+      "Controller",
+      "Department",
+      "save",
+      [
+        {
+          "name": "entity",
+          "type": "DepartmentInput!",
+          "index": 0
+        }
+      ]
+    ],
+    [
+      "saveRole",
+      "Controller",
+      "Role",
+      "save",
+      [
+        {
+          "name": "entity",
+          "type": "RoleInput!",
+          "index": 0
+        }
+      ]
+    ],
+    [
+      "saveStation",
+      "Controller",
+      "Station",
+      "save",
+      [
+        {
+          "name": "entity",
+          "type": "StationInput!",
+          "index": 0
+        }
+      ]
+    ],
+    [
+      "saveToDoItem",
+      "Controller",
+      "ToDoItem",
+      "save",
+      [
+        {
+          "name": "entity",
+          "type": "ToDoItemInput!",
+          "index": 0
+        }
+      ]
+    ],
+    [
+      "saveRoleGroup",
+      "Controller",
+      "RoleGroup",
+      "save",
+      [
+        {
+          "name": "entity",
+          "type": "RoleGroupInput!",
+          "index": 0
+        }
+      ]
+    ],
+    [
+      "saveUserLoginLog",
+      "Controller",
+      "UserLoginLog",
+      "save",
+      [
+        {
+          "name": "entity",
+          "type": "UserLoginLogInput!",
+          "index": 0
+        }
+      ]
+    ],
+    [
+      "saveSafetyScoreLog",
+      "Controller",
+      "SafetyScoreLog",
+      "save",
+      [
+        {
+          "name": "entity",
+          "type": "SafetyScoreLogInput!",
+          "index": 0
+        }
+      ]
+    ],
+    [
+      "saveSafetyScoreRule",
+      "Controller",
+      "SafetyScoreRule",
+      "save",
+      [
+        {
+          "name": "entity",
+          "type": "SafetyScoreRuleInput!",
+          "index": 0
+        }
+      ]
+    ],
+    [
+      "insertUser",
+      "Controller",
+      "User",
+      "insert",
+      [
+        {
+          "name": "entity",
+          "type": "UserInput!",
+          "index": 0
+        }
+      ]
+    ],
+    [
+      "insertSystem",
+      "Controller",
+      "System",
+      "insert",
+      [
+        {
+          "name": "entity",
+          "type": "SystemInput!",
+          "index": 0
+        }
+      ]
+    ],
+    [
+      "insertSystemEvent",
+      "Controller",
+      "SystemEvent",
+      "insert",
+      [
+        {
+          "name": "entity",
+          "type": "SystemEventInput!",
+          "index": 0
+        }
+      ]
+    ],
+    [
+      "insertSystemRight",
+      "Controller",
+      "SystemRight",
+      "insert",
+      [
+        {
+          "name": "entity",
+          "type": "SystemRightInput!",
+          "index": 0
+        }
+      ]
+    ],
+    [
+      "insertDepartment",
+      "Controller",
+      "Department",
+      "insert",
+      [
+        {
+          "name": "entity",
+          "type": "DepartmentInput!",
+          "index": 0
+        }
+      ]
+    ],
+    [
+      "insertRole",
+      "Controller",
+      "Role",
+      "insert",
+      [
+        {
+          "name": "entity",
+          "type": "RoleInput!",
+          "index": 0
+        }
+      ]
+    ],
+    [
+      "insertStation",
+      "Controller",
+      "Station",
+      "insert",
+      [
+        {
+          "name": "entity",
+          "type": "StationInput!",
+          "index": 0
+        }
+      ]
+    ],
+    [
+      "insertToDoItem",
+      "Controller",
+      "ToDoItem",
+      "insert",
+      [
+        {
+          "name": "entity",
+          "type": "ToDoItemInput!",
+          "index": 0
+        }
+      ]
+    ],
+    [
+      "insertRoleGroup",
+      "Controller",
+      "RoleGroup",
+      "insert",
+      [
+        {
+          "name": "entity",
+          "type": "RoleGroupInput!",
+          "index": 0
+        }
+      ]
+    ],
+    [
+      "insertUserLoginLog",
+      "Controller",
+      "UserLoginLog",
+      "insert",
+      [
+        {
+          "name": "entity",
+          "type": "UserLoginLogInput!",
+          "index": 0
+        }
+      ]
+    ],
+    [
+      "insertSafetyScoreLog",
+      "Controller",
+      "SafetyScoreLog",
+      "insert",
+      [
+        {
+          "name": "entity",
+          "type": "SafetyScoreLogInput!",
+          "index": 0
+        }
+      ]
+    ],
+    [
+      "insertSafetyScoreRule",
+      "Controller",
+      "SafetyScoreRule",
+      "insert",
+      [
+        {
+          "name": "entity",
+          "type": "SafetyScoreRuleInput!",
+          "index": 0
+        }
+      ]
+    ]
+  ]
+}

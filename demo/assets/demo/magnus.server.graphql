@@ -1,0 +1,2757 @@
+scalar Double
+
+scalar Float
+
+scalar Int32
+
+scalar Int64
+
+scalar Uint32
+
+scalar Sint32
+
+scalar Fixed32
+
+scalar Sfixed32
+
+scalar Uint64
+
+scalar Sint64
+
+scalar Fixed64
+
+scalar Sfixed64
+
+scalar Bool
+
+scalar Bytes
+
+scalar Empty
+
+scalar Error
+
+scalar Json
+
+scalar Timestamp
+
+scalar Date
+
+"域"
+type Domain {
+  id: Int
+  "域标题"
+  title: String
+  "域编号"
+  code: String
+  "域状态"
+  status: Int
+  "创建人"
+  createUser: Int
+  "创建时间"
+  createDate: Int
+  "部门"
+  departments: [Department]
+  getDepartments: [Department]
+}
+
+"部门表"
+type Department {
+  "部门编号"
+  id: Int
+  "部门名称"
+  title: String
+  "部门状态"
+  status: Int
+  "是否显示"
+  shown: Boolean
+  "上级部门"
+  parent: Department
+  "创建时间"
+  createDate: Int
+  "下级部门"
+  children: [Department]
+  getChildren: [Department]
+  "一个部门可以有多个岗位"
+  stations: [Station]
+  getStations: [Station]
+  "域"
+  domain: Domain
+  domainId: Int
+}
+
+type RoleGroup {
+  id: Int
+  "角色组名"
+  title: String
+  "角色组简介"
+  desc: String
+  "拥有角色"
+  roles: [Role]
+  getRoles: [Role]
+  "用到此角色组的岗位"
+  stations: [Station]
+  getStations: [Station]
+}
+
+"岗位表"
+type Station {
+  "岗位序号"
+  id: Int
+  "岗位标题"
+  title: String
+  "岗位描述"
+  desc: String
+  "岗位标识码"
+  code: String
+  "岗位责任"
+  responsibilities: String
+  "岗位要求"
+  requirements: String
+  "岗位状态"
+  status: Int
+  "创建用户"
+  createUser: User
+  "创建日期"
+  createDate: String
+  "每个岗位有一个部门"
+  department: Department
+  "某个岗位可以被什么角色使用"
+  canUseRoles: [Role]
+  users: [User]
+  getUsers: [User]
+  "一个岗位有一个role group"
+  roleGroup: RoleGroup
+}
+
+"角色表"
+type Role {
+  "序号"
+  id: Int
+  "角色标识"
+  code: String
+  "角色名称"
+  title: String
+  "角色描述"
+  desc: String
+  "一个角色可以有多个权限"
+  rights: [SystemRight]
+  getSystemRights: [SystemRight]
+  "一个角色 可以使用某个岗位的职员"
+  canUseStations: [Station]
+  "创建时间"
+  createDate: Int
+  "更新时间"
+  updateDate: Int
+  "一个角色 被那几个角色组使用"
+  group: RoleGroup
+}
+
+"模块来源权限"
+type SystemRight {
+  id: Int
+  "权限类型\n页面权限、数据权限、功能权限"
+  type: String
+  "权限名"
+  title: String
+  "命名空间"
+  namespace: String
+  "权限代号"
+  code: String
+  "权限链接"
+  link: String
+  "来源模块"
+  fromSystem: System
+  "可用角色"
+  toRoles: Role
+}
+
+"模块事件类型"
+type SystemEvent {
+  id: Int
+  "权限名"
+  title: String
+  "来源模块"
+  fromSystem: System
+  "代办事项"
+  toDoItems: [ToDoItem]
+  getToDoItems: [ToDoItem]
+}
+
+"子系统 子模块"
+type System {
+  id: Int
+  "模块名"
+  title: String
+  "系统缩略图片"
+  image: String
+  "首页链接"
+  link: String
+  "模块代号"
+  code: String
+  "模块权限"
+  rights: [SystemRight]
+  getSystemRights: [SystemRight]
+  "模块事件"
+  events: [SystemEvent]
+  getSystemEvents: [SystemEvent]
+  "代办事项"
+  toDoItems: [ToDoItem]
+  getToDoItems: [ToDoItem]
+  "配置时间"
+  createDate: Int
+}
+
+type ToDoItem {
+  "编号"
+  id: Int
+  "标题"
+  title: String
+  "简介"
+  desc: String
+  "创建时间"
+  createDate: String
+  "来源模块"
+  fromSystem: System
+  fromSystemId: Int
+  "来源事件"
+  fromEvent: SystemEvent
+  fromEventId: Int
+  "申请人"
+  fromUser: User
+  fromUserId: Int
+  "处理人"
+  toUser: User
+  toUserId: Int
+}
+
+input SafetyScoreRuleInput {
+  id: Int
+  "规则名"
+  title: String
+  "代号"
+  code: String
+  "分值"
+  score: Int
+  "是否替换"
+  isReplace: Boolean
+  "记录"
+  logs: [SafetyScoreLogInput]
+  "时间"
+  createDate: Int
+}
+
+"用户安全分扣除记录"
+input SafetyScoreLogInput {
+  "编号"
+  id: Int
+  "扣除分数"
+  score: Int
+  "一个安全积分记录有一条用户登录日志"
+  loginLog: UserLoginLogInput
+  "对应规则"
+  rule: SafetyScoreRuleInput
+  "用户"
+  user: UserInput
+  "时间"
+  createDate: Int
+}
+
+"用户登录日志表"
+input UserLoginLogInput {
+  "日志编号"
+  id: Int
+  user: UserInput
+  "ip地址编号"
+  ip: String
+  "设备编号"
+  deviceId: String
+  "创建时间"
+  createDate: Int
+  "一条登录日志有一个扣分日志"
+  scoreLog: SafetyScoreLogInput
+}
+
+"用户表"
+input UserInput {
+  "用户编号"
+  id: Int
+  "用户名"
+  username: String
+  "邮箱"
+  email: String
+  "头像"
+  avatar: String
+  "电话号码"
+  mobile: String
+  "密码"
+  password: String
+  "1: 账户正常 0:未绑定 -1:刚解冻 -2: 已被封"
+  status: Int
+  "随机码"
+  randomCode: String
+  "密码是否被重置"
+  isRestPassword: Boolean
+  "密码更改时间"
+  passwordDate: Int
+  "创建时间"
+  createDate: Int
+  "这个用户的创建人是谁"
+  createUser: UserInput
+  "创建人的uid"
+  createUserId: Int
+  createUsers: [UserInput]
+  "安全分"
+  safetyScore: Int
+  "用户的代办事项"
+  toDoItems: [ToDoItemInput]
+  "发布者"
+  mineToDoItems: [ToDoItemInput]
+  "用户岗位"
+  stations: [StationInput]
+  "用户的登录记录"
+  loginLogs: [UserLoginLogInput]
+  "用户的安全分扣分记录"
+  safetyScoreLogs: [SafetyScoreLogInput]
+  createStations: [StationInput]
+}
+
+"域"
+input DomainInput {
+  id: Int
+  "域标题"
+  title: String
+  "域编号"
+  code: String
+  "域状态"
+  status: Int
+  "创建人"
+  createUser: Int
+  "创建时间"
+  createDate: Int
+  "部门"
+  departments: [DepartmentInput]
+}
+
+"部门表"
+input DepartmentInput {
+  "部门编号"
+  id: Int
+  "部门名称"
+  title: String
+  "部门状态"
+  status: Int
+  "是否显示"
+  shown: Boolean
+  "上级部门"
+  parent: DepartmentInput
+  "创建时间"
+  createDate: Int
+  "下级部门"
+  children: [DepartmentInput]
+  "一个部门可以有多个岗位"
+  stations: [StationInput]
+  "域"
+  domain: DomainInput
+  domainId: Int
+}
+
+input RoleGroupInput {
+  id: Int
+  "角色组名"
+  title: String
+  "角色组简介"
+  desc: String
+  "拥有角色"
+  roles: [RoleInput]
+  "用到此角色组的岗位"
+  stations: [StationInput]
+}
+
+"岗位表"
+input StationInput {
+  "岗位序号"
+  id: Int
+  "岗位标题"
+  title: String
+  "岗位描述"
+  desc: String
+  "岗位标识码"
+  code: String
+  "岗位责任"
+  responsibilities: String
+  "岗位要求"
+  requirements: String
+  "岗位状态"
+  status: Int
+  "创建用户"
+  createUser: UserInput
+  "创建日期"
+  createDate: String
+  "每个岗位有一个部门"
+  department: DepartmentInput
+  "某个岗位可以被什么角色使用"
+  canUseRoles: [RoleInput]
+  users: [UserInput]
+  "一个岗位有一个role group"
+  roleGroup: RoleGroupInput
+}
+
+"角色表"
+input RoleInput {
+  "序号"
+  id: Int
+  "角色标识"
+  code: String
+  "角色名称"
+  title: String
+  "角色描述"
+  desc: String
+  "一个角色可以有多个权限"
+  rights: [SystemRightInput]
+  "一个角色 可以使用某个岗位的职员"
+  canUseStations: [StationInput]
+  "创建时间"
+  createDate: Int
+  "更新时间"
+  updateDate: Int
+  "一个角色 被那几个角色组使用"
+  group: RoleGroupInput
+}
+
+"模块来源权限"
+input SystemRightInput {
+  id: Int
+  "权限类型\n页面权限、数据权限、功能权限"
+  type: String
+  "权限名"
+  title: String
+  "命名空间"
+  namespace: String
+  "权限代号"
+  code: String
+  "权限链接"
+  link: String
+  "来源模块"
+  fromSystem: SystemInput
+  "可用角色"
+  toRoles: RoleInput
+}
+
+"模块事件类型"
+input SystemEventInput {
+  id: Int
+  "权限名"
+  title: String
+  "来源模块"
+  fromSystem: SystemInput
+  "代办事项"
+  toDoItems: [ToDoItemInput]
+}
+
+"子系统 子模块"
+input SystemInput {
+  id: Int
+  "模块名"
+  title: String
+  "系统缩略图片"
+  image: String
+  "首页链接"
+  link: String
+  "模块代号"
+  code: String
+  "模块权限"
+  rights: [SystemRightInput]
+  "模块事件"
+  events: [SystemEventInput]
+  "代办事项"
+  toDoItems: [ToDoItemInput]
+  "配置时间"
+  createDate: Int
+}
+
+input ToDoItemInput {
+  "编号"
+  id: Int
+  "标题"
+  title: String
+  "简介"
+  desc: String
+  "创建时间"
+  createDate: String
+  "来源模块"
+  fromSystem: SystemInput
+  fromSystemId: Int
+  "来源事件"
+  fromEvent: SystemEventInput
+  fromEventId: Int
+  "申请人"
+  fromUser: UserInput
+  fromUserId: Int
+  "处理人"
+  toUser: UserInput
+  toUserId: Int
+}
+
+input ToDoItemInputWhere {
+  "编号 不等于"
+  id_Not: Int
+  "编号 在制定内，如[1,2]"
+  id_In: [Int!]
+  "编号 不在制定内,如[1,2]"
+  id_NotIn: [Int!]
+  "编号 小于"
+  id_Lt: Int
+  "编号 小于等于"
+  id_Lte: Int
+  "编号 大于"
+  id_Gt: Int
+  "编号 大于等于"
+  id_Gte: Int
+  "编号"
+  id: Int
+  "标题 不等于"
+  title_Not: String
+  "标题 在制定内，如[1,2]"
+  title_In: [String!]
+  "标题 不在制定内,如[1,2]"
+  title_NotIn: [String!]
+  "标题 小于"
+  title_Lt: String
+  "标题 小于等于"
+  title_Lte: String
+  "标题 大于"
+  title_Gt: String
+  "标题 大于等于"
+  title_Gte: String
+  "标题 包含"
+  title_Contains: String
+  "标题 不包含"
+  title_NotContains: String
+  "标题 开头等于"
+  title_StartsWith: String
+  "标题 开头不等于"
+  title_NotStartsWith: String
+  "标题 结尾等于"
+  title_EndsWith: String
+  "标题 结尾不等于"
+  title_NotEndsWith: String
+  "标题"
+  title: String
+  "简介 不等于"
+  desc_Not: String
+  "简介 在制定内，如[1,2]"
+  desc_In: [String!]
+  "简介 不在制定内,如[1,2]"
+  desc_NotIn: [String!]
+  "简介 小于"
+  desc_Lt: String
+  "简介 小于等于"
+  desc_Lte: String
+  "简介 大于"
+  desc_Gt: String
+  "简介 大于等于"
+  desc_Gte: String
+  "简介 包含"
+  desc_Contains: String
+  "简介 不包含"
+  desc_NotContains: String
+  "简介 开头等于"
+  desc_StartsWith: String
+  "简介 开头不等于"
+  desc_NotStartsWith: String
+  "简介 结尾等于"
+  desc_EndsWith: String
+  "简介 结尾不等于"
+  desc_NotEndsWith: String
+  "简介"
+  desc: String
+  "创建时间 不等于"
+  createDate_Not: String
+  "创建时间 在制定内，如[1,2]"
+  createDate_In: [String!]
+  "创建时间 不在制定内,如[1,2]"
+  createDate_NotIn: [String!]
+  "创建时间 小于"
+  createDate_Lt: String
+  "创建时间 小于等于"
+  createDate_Lte: String
+  "创建时间 大于"
+  createDate_Gt: String
+  "创建时间 大于等于"
+  createDate_Gte: String
+  "创建时间 包含"
+  createDate_Contains: String
+  "创建时间 不包含"
+  createDate_NotContains: String
+  "创建时间 开头等于"
+  createDate_StartsWith: String
+  "创建时间 开头不等于"
+  createDate_NotStartsWith: String
+  "创建时间 结尾等于"
+  createDate_EndsWith: String
+  "创建时间 结尾不等于"
+  createDate_NotEndsWith: String
+  "创建时间"
+  createDate: String
+  ""
+  fromSystemId_Not: Int
+  ""
+  fromSystemId_In: [Int!]
+  ""
+  fromSystemId_NotIn: [Int!]
+  ""
+  fromSystemId_Lt: Int
+  ""
+  fromSystemId_Lte: Int
+  ""
+  fromSystemId_Gt: Int
+  ""
+  fromSystemId_Gte: Int
+  fromSystemId: Int
+  ""
+  fromEventId_Not: Int
+  ""
+  fromEventId_In: [Int!]
+  ""
+  fromEventId_NotIn: [Int!]
+  ""
+  fromEventId_Lt: Int
+  ""
+  fromEventId_Lte: Int
+  ""
+  fromEventId_Gt: Int
+  ""
+  fromEventId_Gte: Int
+  fromEventId: Int
+  ""
+  fromUserId_Not: Int
+  ""
+  fromUserId_In: [Int!]
+  ""
+  fromUserId_NotIn: [Int!]
+  ""
+  fromUserId_Lt: Int
+  ""
+  fromUserId_Lte: Int
+  ""
+  fromUserId_Gt: Int
+  ""
+  fromUserId_Gte: Int
+  fromUserId: Int
+  ""
+  toUserId_Not: Int
+  ""
+  toUserId_In: [Int!]
+  ""
+  toUserId_NotIn: [Int!]
+  ""
+  toUserId_Lt: Int
+  ""
+  toUserId_Lte: Int
+  ""
+  toUserId_Gt: Int
+  ""
+  toUserId_Gte: Int
+  toUserId: Int
+  AND: [ToDoItemInputWhere!]
+  OR: [ToDoItemInputWhere!]
+  NOT: [ToDoItemInputWhere!]
+}
+
+input ToDoItemInputOrder {
+  "编号\n排序可选值为ASC或者DESC"
+  id: String
+  "标题\n排序可选值为ASC或者DESC"
+  title: String
+  "简介\n排序可选值为ASC或者DESC"
+  desc: String
+  "创建时间\n排序可选值为ASC或者DESC"
+  createDate: String
+  "来源模块\n排序可选值为ASC或者DESC"
+  fromSystem: String
+  fromSystemId: String
+  "来源事件\n排序可选值为ASC或者DESC"
+  fromEvent: String
+  fromEventId: String
+  "申请人\n排序可选值为ASC或者DESC"
+  fromUser: String
+  fromUserId: String
+  "处理人\n排序可选值为ASC或者DESC"
+  toUser: String
+  toUserId: String
+}
+
+input PageLimitInput {
+  "页码"
+  page: Int!
+  "每页数量"
+  psize: Int!
+}
+
+"岗位表"
+input StationInputWhere {
+  "岗位序号 不等于"
+  id_Not: Int
+  "岗位序号 在制定内，如[1,2]"
+  id_In: [Int!]
+  "岗位序号 不在制定内,如[1,2]"
+  id_NotIn: [Int!]
+  "岗位序号 小于"
+  id_Lt: Int
+  "岗位序号 小于等于"
+  id_Lte: Int
+  "岗位序号 大于"
+  id_Gt: Int
+  "岗位序号 大于等于"
+  id_Gte: Int
+  "岗位序号"
+  id: Int
+  "岗位标题 不等于"
+  title_Not: String
+  "岗位标题 在制定内，如[1,2]"
+  title_In: [String!]
+  "岗位标题 不在制定内,如[1,2]"
+  title_NotIn: [String!]
+  "岗位标题 小于"
+  title_Lt: String
+  "岗位标题 小于等于"
+  title_Lte: String
+  "岗位标题 大于"
+  title_Gt: String
+  "岗位标题 大于等于"
+  title_Gte: String
+  "岗位标题 包含"
+  title_Contains: String
+  "岗位标题 不包含"
+  title_NotContains: String
+  "岗位标题 开头等于"
+  title_StartsWith: String
+  "岗位标题 开头不等于"
+  title_NotStartsWith: String
+  "岗位标题 结尾等于"
+  title_EndsWith: String
+  "岗位标题 结尾不等于"
+  title_NotEndsWith: String
+  "岗位标题"
+  title: String
+  "岗位描述 不等于"
+  desc_Not: String
+  "岗位描述 在制定内，如[1,2]"
+  desc_In: [String!]
+  "岗位描述 不在制定内,如[1,2]"
+  desc_NotIn: [String!]
+  "岗位描述 小于"
+  desc_Lt: String
+  "岗位描述 小于等于"
+  desc_Lte: String
+  "岗位描述 大于"
+  desc_Gt: String
+  "岗位描述 大于等于"
+  desc_Gte: String
+  "岗位描述 包含"
+  desc_Contains: String
+  "岗位描述 不包含"
+  desc_NotContains: String
+  "岗位描述 开头等于"
+  desc_StartsWith: String
+  "岗位描述 开头不等于"
+  desc_NotStartsWith: String
+  "岗位描述 结尾等于"
+  desc_EndsWith: String
+  "岗位描述 结尾不等于"
+  desc_NotEndsWith: String
+  "岗位描述"
+  desc: String
+  "岗位标识码 不等于"
+  code_Not: String
+  "岗位标识码 在制定内，如[1,2]"
+  code_In: [String!]
+  "岗位标识码 不在制定内,如[1,2]"
+  code_NotIn: [String!]
+  "岗位标识码 小于"
+  code_Lt: String
+  "岗位标识码 小于等于"
+  code_Lte: String
+  "岗位标识码 大于"
+  code_Gt: String
+  "岗位标识码 大于等于"
+  code_Gte: String
+  "岗位标识码 包含"
+  code_Contains: String
+  "岗位标识码 不包含"
+  code_NotContains: String
+  "岗位标识码 开头等于"
+  code_StartsWith: String
+  "岗位标识码 开头不等于"
+  code_NotStartsWith: String
+  "岗位标识码 结尾等于"
+  code_EndsWith: String
+  "岗位标识码 结尾不等于"
+  code_NotEndsWith: String
+  "岗位标识码"
+  code: String
+  "岗位责任 不等于"
+  responsibilities_Not: String
+  "岗位责任 在制定内，如[1,2]"
+  responsibilities_In: [String!]
+  "岗位责任 不在制定内,如[1,2]"
+  responsibilities_NotIn: [String!]
+  "岗位责任 小于"
+  responsibilities_Lt: String
+  "岗位责任 小于等于"
+  responsibilities_Lte: String
+  "岗位责任 大于"
+  responsibilities_Gt: String
+  "岗位责任 大于等于"
+  responsibilities_Gte: String
+  "岗位责任 包含"
+  responsibilities_Contains: String
+  "岗位责任 不包含"
+  responsibilities_NotContains: String
+  "岗位责任 开头等于"
+  responsibilities_StartsWith: String
+  "岗位责任 开头不等于"
+  responsibilities_NotStartsWith: String
+  "岗位责任 结尾等于"
+  responsibilities_EndsWith: String
+  "岗位责任 结尾不等于"
+  responsibilities_NotEndsWith: String
+  "岗位责任"
+  responsibilities: String
+  "岗位要求 不等于"
+  requirements_Not: String
+  "岗位要求 在制定内，如[1,2]"
+  requirements_In: [String!]
+  "岗位要求 不在制定内,如[1,2]"
+  requirements_NotIn: [String!]
+  "岗位要求 小于"
+  requirements_Lt: String
+  "岗位要求 小于等于"
+  requirements_Lte: String
+  "岗位要求 大于"
+  requirements_Gt: String
+  "岗位要求 大于等于"
+  requirements_Gte: String
+  "岗位要求 包含"
+  requirements_Contains: String
+  "岗位要求 不包含"
+  requirements_NotContains: String
+  "岗位要求 开头等于"
+  requirements_StartsWith: String
+  "岗位要求 开头不等于"
+  requirements_NotStartsWith: String
+  "岗位要求 结尾等于"
+  requirements_EndsWith: String
+  "岗位要求 结尾不等于"
+  requirements_NotEndsWith: String
+  "岗位要求"
+  requirements: String
+  "岗位状态 不等于"
+  status_Not: Int
+  "岗位状态 在制定内，如[1,2]"
+  status_In: [Int!]
+  "岗位状态 不在制定内,如[1,2]"
+  status_NotIn: [Int!]
+  "岗位状态 小于"
+  status_Lt: Int
+  "岗位状态 小于等于"
+  status_Lte: Int
+  "岗位状态 大于"
+  status_Gt: Int
+  "岗位状态 大于等于"
+  status_Gte: Int
+  "岗位状态"
+  status: Int
+  "创建日期 不等于"
+  createDate_Not: String
+  "创建日期 在制定内，如[1,2]"
+  createDate_In: [String!]
+  "创建日期 不在制定内,如[1,2]"
+  createDate_NotIn: [String!]
+  "创建日期 小于"
+  createDate_Lt: String
+  "创建日期 小于等于"
+  createDate_Lte: String
+  "创建日期 大于"
+  createDate_Gt: String
+  "创建日期 大于等于"
+  createDate_Gte: String
+  "创建日期 包含"
+  createDate_Contains: String
+  "创建日期 不包含"
+  createDate_NotContains: String
+  "创建日期 开头等于"
+  createDate_StartsWith: String
+  "创建日期 开头不等于"
+  createDate_NotStartsWith: String
+  "创建日期 结尾等于"
+  createDate_EndsWith: String
+  "创建日期 结尾不等于"
+  createDate_NotEndsWith: String
+  "创建日期"
+  createDate: String
+  AND: [StationInputWhere!]
+  OR: [StationInputWhere!]
+  NOT: [StationInputWhere!]
+}
+
+"岗位表"
+input StationInputOrder {
+  "岗位序号\n排序可选值为ASC或者DESC"
+  id: String
+  "岗位标题\n排序可选值为ASC或者DESC"
+  title: String
+  "岗位描述\n排序可选值为ASC或者DESC"
+  desc: String
+  "岗位标识码\n排序可选值为ASC或者DESC"
+  code: String
+  "岗位责任\n排序可选值为ASC或者DESC"
+  responsibilities: String
+  "岗位要求\n排序可选值为ASC或者DESC"
+  requirements: String
+  "岗位状态\n排序可选值为ASC或者DESC"
+  status: String
+  "创建用户\n排序可选值为ASC或者DESC"
+  createUser: String
+  "创建日期\n排序可选值为ASC或者DESC"
+  createDate: String
+  "每个岗位有一个部门\n排序可选值为ASC或者DESC"
+  department: String
+  "某个岗位可以被什么角色使用\n排序可选值为ASC或者DESC"
+  canUseRoles: String
+  users: String
+  "一个岗位有一个role group\n排序可选值为ASC或者DESC"
+  roleGroup: String
+}
+
+type SafetyScoreRule {
+  id: Int
+  "规则名"
+  title: String
+  "代号"
+  code: String
+  "分值"
+  score: Int
+  "是否替换"
+  isReplace: Boolean
+  "记录"
+  logs: [SafetyScoreLog]
+  getSafetyScoreLogs: [SafetyScoreLog]
+  "时间"
+  createDate: Int
+}
+
+"用户安全分扣除记录"
+type SafetyScoreLog {
+  "编号"
+  id: Int
+  "扣除分数"
+  score: Int
+  "一个安全积分记录有一条用户登录日志"
+  loginLog: UserLoginLog
+  "对应规则"
+  rule: SafetyScoreRule
+  "用户"
+  user: User
+  "时间"
+  createDate: Int
+}
+
+"用户登录日志表"
+type UserLoginLog {
+  "日志编号"
+  id: Int
+  user: User
+  "ip地址编号"
+  ip: String
+  "设备编号"
+  deviceId: String
+  "创建时间"
+  createDate: Int
+  "一条登录日志有一个扣分日志"
+  scoreLog: SafetyScoreLog
+}
+
+"用户登录日志表"
+input UserLoginLogInputWhere {
+  "日志编号 不等于"
+  id_Not: Int
+  "日志编号 在制定内，如[1,2]"
+  id_In: [Int!]
+  "日志编号 不在制定内,如[1,2]"
+  id_NotIn: [Int!]
+  "日志编号 小于"
+  id_Lt: Int
+  "日志编号 小于等于"
+  id_Lte: Int
+  "日志编号 大于"
+  id_Gt: Int
+  "日志编号 大于等于"
+  id_Gte: Int
+  "日志编号"
+  id: Int
+  "ip地址编号 不等于"
+  ip_Not: String
+  "ip地址编号 在制定内，如[1,2]"
+  ip_In: [String!]
+  "ip地址编号 不在制定内,如[1,2]"
+  ip_NotIn: [String!]
+  "ip地址编号 小于"
+  ip_Lt: String
+  "ip地址编号 小于等于"
+  ip_Lte: String
+  "ip地址编号 大于"
+  ip_Gt: String
+  "ip地址编号 大于等于"
+  ip_Gte: String
+  "ip地址编号 包含"
+  ip_Contains: String
+  "ip地址编号 不包含"
+  ip_NotContains: String
+  "ip地址编号 开头等于"
+  ip_StartsWith: String
+  "ip地址编号 开头不等于"
+  ip_NotStartsWith: String
+  "ip地址编号 结尾等于"
+  ip_EndsWith: String
+  "ip地址编号 结尾不等于"
+  ip_NotEndsWith: String
+  "ip地址编号"
+  ip: String
+  "设备编号 不等于"
+  deviceId_Not: String
+  "设备编号 在制定内，如[1,2]"
+  deviceId_In: [String!]
+  "设备编号 不在制定内,如[1,2]"
+  deviceId_NotIn: [String!]
+  "设备编号 小于"
+  deviceId_Lt: String
+  "设备编号 小于等于"
+  deviceId_Lte: String
+  "设备编号 大于"
+  deviceId_Gt: String
+  "设备编号 大于等于"
+  deviceId_Gte: String
+  "设备编号 包含"
+  deviceId_Contains: String
+  "设备编号 不包含"
+  deviceId_NotContains: String
+  "设备编号 开头等于"
+  deviceId_StartsWith: String
+  "设备编号 开头不等于"
+  deviceId_NotStartsWith: String
+  "设备编号 结尾等于"
+  deviceId_EndsWith: String
+  "设备编号 结尾不等于"
+  deviceId_NotEndsWith: String
+  "设备编号"
+  deviceId: String
+  "创建时间 不等于"
+  createDate_Not: Int
+  "创建时间 在制定内，如[1,2]"
+  createDate_In: [Int!]
+  "创建时间 不在制定内,如[1,2]"
+  createDate_NotIn: [Int!]
+  "创建时间 小于"
+  createDate_Lt: Int
+  "创建时间 小于等于"
+  createDate_Lte: Int
+  "创建时间 大于"
+  createDate_Gt: Int
+  "创建时间 大于等于"
+  createDate_Gte: Int
+  "创建时间"
+  createDate: Int
+  AND: [UserLoginLogInputWhere!]
+  OR: [UserLoginLogInputWhere!]
+  NOT: [UserLoginLogInputWhere!]
+}
+
+"用户登录日志表"
+input UserLoginLogInputOrder {
+  "日志编号\n排序可选值为ASC或者DESC"
+  id: String
+  user: String
+  "ip地址编号\n排序可选值为ASC或者DESC"
+  ip: String
+  "设备编号\n排序可选值为ASC或者DESC"
+  deviceId: String
+  "创建时间\n排序可选值为ASC或者DESC"
+  createDate: String
+  "一条登录日志有一个扣分日志\n排序可选值为ASC或者DESC"
+  scoreLog: String
+}
+
+"用户安全分扣除记录"
+input SafetyScoreLogInputWhere {
+  "编号 不等于"
+  id_Not: Int
+  "编号 在制定内，如[1,2]"
+  id_In: [Int!]
+  "编号 不在制定内,如[1,2]"
+  id_NotIn: [Int!]
+  "编号 小于"
+  id_Lt: Int
+  "编号 小于等于"
+  id_Lte: Int
+  "编号 大于"
+  id_Gt: Int
+  "编号 大于等于"
+  id_Gte: Int
+  "编号"
+  id: Int
+  "扣除分数 不等于"
+  score_Not: Int
+  "扣除分数 在制定内，如[1,2]"
+  score_In: [Int!]
+  "扣除分数 不在制定内,如[1,2]"
+  score_NotIn: [Int!]
+  "扣除分数 小于"
+  score_Lt: Int
+  "扣除分数 小于等于"
+  score_Lte: Int
+  "扣除分数 大于"
+  score_Gt: Int
+  "扣除分数 大于等于"
+  score_Gte: Int
+  "扣除分数"
+  score: Int
+  "时间 不等于"
+  createDate_Not: Int
+  "时间 在制定内，如[1,2]"
+  createDate_In: [Int!]
+  "时间 不在制定内,如[1,2]"
+  createDate_NotIn: [Int!]
+  "时间 小于"
+  createDate_Lt: Int
+  "时间 小于等于"
+  createDate_Lte: Int
+  "时间 大于"
+  createDate_Gt: Int
+  "时间 大于等于"
+  createDate_Gte: Int
+  "时间"
+  createDate: Int
+  AND: [SafetyScoreLogInputWhere!]
+  OR: [SafetyScoreLogInputWhere!]
+  NOT: [SafetyScoreLogInputWhere!]
+}
+
+"用户安全分扣除记录"
+input SafetyScoreLogInputOrder {
+  "编号\n排序可选值为ASC或者DESC"
+  id: String
+  "扣除分数\n排序可选值为ASC或者DESC"
+  score: String
+  "一个安全积分记录有一条用户登录日志\n排序可选值为ASC或者DESC"
+  loginLog: String
+  "对应规则\n排序可选值为ASC或者DESC"
+  rule: String
+  "用户\n排序可选值为ASC或者DESC"
+  user: String
+  "时间\n排序可选值为ASC或者DESC"
+  createDate: String
+}
+
+"用户表"
+type User {
+  "用户编号"
+  id: Int
+  "用户名"
+  username: String
+  "邮箱"
+  email: String
+  "头像"
+  avatar: String
+  "电话号码"
+  mobile: String
+  "密码"
+  password: String
+  "1: 账户正常 0:未绑定 -1:刚解冻 -2: 已被封"
+  status: Int
+  "随机码"
+  randomCode: String
+  "密码是否被重置"
+  isRestPassword: Boolean
+  "密码更改时间"
+  passwordDate: Int
+  "创建时间"
+  createDate: Int
+  "这个用户的创建人是谁"
+  createUser: User
+  "创建人的uid"
+  createUserId: Int
+  createUsers: [User]
+  "安全分"
+  safetyScore: Int
+  "用户的代办事项"
+  toDoItems: [ToDoItem]
+  "发布者"
+  mineToDoItems: [ToDoItem]
+  getToDoItems(where: ToDoItemInputWhere, order: ToDoItemInputOrder, limit: PageLimitInput): [ToDoItem]
+  "用户岗位"
+  stations: [Station]
+  getStations(where: StationInputWhere, order: StationInputOrder, limit: PageLimitInput): [Station]
+  "用户的登录记录"
+  loginLogs: [UserLoginLog]
+  getUserLoginLogs(where: UserLoginLogInputWhere, order: UserLoginLogInputOrder, limit: PageLimitInput): [UserLoginLog]
+  "用户的安全分扣分记录"
+  safetyScoreLogs: [SafetyScoreLog]
+  getSafetyScoreLogs(where: SafetyScoreLogInputWhere, order: SafetyScoreLogInputOrder, limit: PageLimitInput): [SafetyScoreLog]
+  createStations: [Station]
+  getCreateStations(where: StationInputWhere, order: StationInputOrder, limit: PageLimitInput): [Station]
+}
+
+"用户表"
+input UserInputWhere {
+  "用户编号 不等于"
+  id_Not: Int
+  "用户编号 在制定内，如[1,2]"
+  id_In: [Int!]
+  "用户编号 不在制定内,如[1,2]"
+  id_NotIn: [Int!]
+  "用户编号 小于"
+  id_Lt: Int
+  "用户编号 小于等于"
+  id_Lte: Int
+  "用户编号 大于"
+  id_Gt: Int
+  "用户编号 大于等于"
+  id_Gte: Int
+  "用户编号"
+  id: Int
+  "用户名 不等于"
+  username_Not: String
+  "用户名 在制定内，如[1,2]"
+  username_In: [String!]
+  "用户名 不在制定内,如[1,2]"
+  username_NotIn: [String!]
+  "用户名 小于"
+  username_Lt: String
+  "用户名 小于等于"
+  username_Lte: String
+  "用户名 大于"
+  username_Gt: String
+  "用户名 大于等于"
+  username_Gte: String
+  "用户名 包含"
+  username_Contains: String
+  "用户名 不包含"
+  username_NotContains: String
+  "用户名 开头等于"
+  username_StartsWith: String
+  "用户名 开头不等于"
+  username_NotStartsWith: String
+  "用户名 结尾等于"
+  username_EndsWith: String
+  "用户名 结尾不等于"
+  username_NotEndsWith: String
+  "用户名"
+  username: String
+  "邮箱 不等于"
+  email_Not: String
+  "邮箱 在制定内，如[1,2]"
+  email_In: [String!]
+  "邮箱 不在制定内,如[1,2]"
+  email_NotIn: [String!]
+  "邮箱 小于"
+  email_Lt: String
+  "邮箱 小于等于"
+  email_Lte: String
+  "邮箱 大于"
+  email_Gt: String
+  "邮箱 大于等于"
+  email_Gte: String
+  "邮箱 包含"
+  email_Contains: String
+  "邮箱 不包含"
+  email_NotContains: String
+  "邮箱 开头等于"
+  email_StartsWith: String
+  "邮箱 开头不等于"
+  email_NotStartsWith: String
+  "邮箱 结尾等于"
+  email_EndsWith: String
+  "邮箱 结尾不等于"
+  email_NotEndsWith: String
+  "邮箱"
+  email: String
+  "头像 不等于"
+  avatar_Not: String
+  "头像 在制定内，如[1,2]"
+  avatar_In: [String!]
+  "头像 不在制定内,如[1,2]"
+  avatar_NotIn: [String!]
+  "头像 小于"
+  avatar_Lt: String
+  "头像 小于等于"
+  avatar_Lte: String
+  "头像 大于"
+  avatar_Gt: String
+  "头像 大于等于"
+  avatar_Gte: String
+  "头像 包含"
+  avatar_Contains: String
+  "头像 不包含"
+  avatar_NotContains: String
+  "头像 开头等于"
+  avatar_StartsWith: String
+  "头像 开头不等于"
+  avatar_NotStartsWith: String
+  "头像 结尾等于"
+  avatar_EndsWith: String
+  "头像 结尾不等于"
+  avatar_NotEndsWith: String
+  "头像"
+  avatar: String
+  "电话号码 不等于"
+  mobile_Not: String
+  "电话号码 在制定内，如[1,2]"
+  mobile_In: [String!]
+  "电话号码 不在制定内,如[1,2]"
+  mobile_NotIn: [String!]
+  "电话号码 小于"
+  mobile_Lt: String
+  "电话号码 小于等于"
+  mobile_Lte: String
+  "电话号码 大于"
+  mobile_Gt: String
+  "电话号码 大于等于"
+  mobile_Gte: String
+  "电话号码 包含"
+  mobile_Contains: String
+  "电话号码 不包含"
+  mobile_NotContains: String
+  "电话号码 开头等于"
+  mobile_StartsWith: String
+  "电话号码 开头不等于"
+  mobile_NotStartsWith: String
+  "电话号码 结尾等于"
+  mobile_EndsWith: String
+  "电话号码 结尾不等于"
+  mobile_NotEndsWith: String
+  "电话号码"
+  mobile: String
+  "密码 不等于"
+  password_Not: String
+  "密码 在制定内，如[1,2]"
+  password_In: [String!]
+  "密码 不在制定内,如[1,2]"
+  password_NotIn: [String!]
+  "密码 小于"
+  password_Lt: String
+  "密码 小于等于"
+  password_Lte: String
+  "密码 大于"
+  password_Gt: String
+  "密码 大于等于"
+  password_Gte: String
+  "密码 包含"
+  password_Contains: String
+  "密码 不包含"
+  password_NotContains: String
+  "密码 开头等于"
+  password_StartsWith: String
+  "密码 开头不等于"
+  password_NotStartsWith: String
+  "密码 结尾等于"
+  password_EndsWith: String
+  "密码 结尾不等于"
+  password_NotEndsWith: String
+  "密码"
+  password: String
+  "1: 账户正常 0:未绑定 -1:刚解冻 -2: 已被封 不等于"
+  status_Not: Int
+  "1: 账户正常 0:未绑定 -1:刚解冻 -2: 已被封 在制定内，如[1,2]"
+  status_In: [Int!]
+  "1: 账户正常 0:未绑定 -1:刚解冻 -2: 已被封 不在制定内,如[1,2]"
+  status_NotIn: [Int!]
+  "1: 账户正常 0:未绑定 -1:刚解冻 -2: 已被封 小于"
+  status_Lt: Int
+  "1: 账户正常 0:未绑定 -1:刚解冻 -2: 已被封 小于等于"
+  status_Lte: Int
+  "1: 账户正常 0:未绑定 -1:刚解冻 -2: 已被封 大于"
+  status_Gt: Int
+  "1: 账户正常 0:未绑定 -1:刚解冻 -2: 已被封 大于等于"
+  status_Gte: Int
+  "1: 账户正常 0:未绑定 -1:刚解冻 -2: 已被封"
+  status: Int
+  "随机码 不等于"
+  randomCode_Not: String
+  "随机码 在制定内，如[1,2]"
+  randomCode_In: [String!]
+  "随机码 不在制定内,如[1,2]"
+  randomCode_NotIn: [String!]
+  "随机码 小于"
+  randomCode_Lt: String
+  "随机码 小于等于"
+  randomCode_Lte: String
+  "随机码 大于"
+  randomCode_Gt: String
+  "随机码 大于等于"
+  randomCode_Gte: String
+  "随机码 包含"
+  randomCode_Contains: String
+  "随机码 不包含"
+  randomCode_NotContains: String
+  "随机码 开头等于"
+  randomCode_StartsWith: String
+  "随机码 开头不等于"
+  randomCode_NotStartsWith: String
+  "随机码 结尾等于"
+  randomCode_EndsWith: String
+  "随机码 结尾不等于"
+  randomCode_NotEndsWith: String
+  "随机码"
+  randomCode: String
+  "密码更改时间 不等于"
+  passwordDate_Not: Int
+  "密码更改时间 在制定内，如[1,2]"
+  passwordDate_In: [Int!]
+  "密码更改时间 不在制定内,如[1,2]"
+  passwordDate_NotIn: [Int!]
+  "密码更改时间 小于"
+  passwordDate_Lt: Int
+  "密码更改时间 小于等于"
+  passwordDate_Lte: Int
+  "密码更改时间 大于"
+  passwordDate_Gt: Int
+  "密码更改时间 大于等于"
+  passwordDate_Gte: Int
+  "密码更改时间"
+  passwordDate: Int
+  "创建时间 不等于"
+  createDate_Not: Int
+  "创建时间 在制定内，如[1,2]"
+  createDate_In: [Int!]
+  "创建时间 不在制定内,如[1,2]"
+  createDate_NotIn: [Int!]
+  "创建时间 小于"
+  createDate_Lt: Int
+  "创建时间 小于等于"
+  createDate_Lte: Int
+  "创建时间 大于"
+  createDate_Gt: Int
+  "创建时间 大于等于"
+  createDate_Gte: Int
+  "创建时间"
+  createDate: Int
+  "创建人的uid 不等于"
+  createUserId_Not: Int
+  "创建人的uid 在制定内，如[1,2]"
+  createUserId_In: [Int!]
+  "创建人的uid 不在制定内,如[1,2]"
+  createUserId_NotIn: [Int!]
+  "创建人的uid 小于"
+  createUserId_Lt: Int
+  "创建人的uid 小于等于"
+  createUserId_Lte: Int
+  "创建人的uid 大于"
+  createUserId_Gt: Int
+  "创建人的uid 大于等于"
+  createUserId_Gte: Int
+  "创建人的uid"
+  createUserId: Int
+  "安全分 不等于"
+  safetyScore_Not: Int
+  "安全分 在制定内，如[1,2]"
+  safetyScore_In: [Int!]
+  "安全分 不在制定内,如[1,2]"
+  safetyScore_NotIn: [Int!]
+  "安全分 小于"
+  safetyScore_Lt: Int
+  "安全分 小于等于"
+  safetyScore_Lte: Int
+  "安全分 大于"
+  safetyScore_Gt: Int
+  "安全分 大于等于"
+  safetyScore_Gte: Int
+  "安全分"
+  safetyScore: Int
+  AND: [UserInputWhere!]
+  OR: [UserInputWhere!]
+  NOT: [UserInputWhere!]
+}
+
+"子系统 子模块"
+input SystemInputWhere {
+  ""
+  id_Not: Int
+  ""
+  id_In: [Int!]
+  ""
+  id_NotIn: [Int!]
+  ""
+  id_Lt: Int
+  ""
+  id_Lte: Int
+  ""
+  id_Gt: Int
+  ""
+  id_Gte: Int
+  id: Int
+  "模块名 不等于"
+  title_Not: String
+  "模块名 在制定内，如[1,2]"
+  title_In: [String!]
+  "模块名 不在制定内,如[1,2]"
+  title_NotIn: [String!]
+  "模块名 小于"
+  title_Lt: String
+  "模块名 小于等于"
+  title_Lte: String
+  "模块名 大于"
+  title_Gt: String
+  "模块名 大于等于"
+  title_Gte: String
+  "模块名 包含"
+  title_Contains: String
+  "模块名 不包含"
+  title_NotContains: String
+  "模块名 开头等于"
+  title_StartsWith: String
+  "模块名 开头不等于"
+  title_NotStartsWith: String
+  "模块名 结尾等于"
+  title_EndsWith: String
+  "模块名 结尾不等于"
+  title_NotEndsWith: String
+  "模块名"
+  title: String
+  "系统缩略图片 不等于"
+  image_Not: String
+  "系统缩略图片 在制定内，如[1,2]"
+  image_In: [String!]
+  "系统缩略图片 不在制定内,如[1,2]"
+  image_NotIn: [String!]
+  "系统缩略图片 小于"
+  image_Lt: String
+  "系统缩略图片 小于等于"
+  image_Lte: String
+  "系统缩略图片 大于"
+  image_Gt: String
+  "系统缩略图片 大于等于"
+  image_Gte: String
+  "系统缩略图片 包含"
+  image_Contains: String
+  "系统缩略图片 不包含"
+  image_NotContains: String
+  "系统缩略图片 开头等于"
+  image_StartsWith: String
+  "系统缩略图片 开头不等于"
+  image_NotStartsWith: String
+  "系统缩略图片 结尾等于"
+  image_EndsWith: String
+  "系统缩略图片 结尾不等于"
+  image_NotEndsWith: String
+  "系统缩略图片"
+  image: String
+  "首页链接 不等于"
+  link_Not: String
+  "首页链接 在制定内，如[1,2]"
+  link_In: [String!]
+  "首页链接 不在制定内,如[1,2]"
+  link_NotIn: [String!]
+  "首页链接 小于"
+  link_Lt: String
+  "首页链接 小于等于"
+  link_Lte: String
+  "首页链接 大于"
+  link_Gt: String
+  "首页链接 大于等于"
+  link_Gte: String
+  "首页链接 包含"
+  link_Contains: String
+  "首页链接 不包含"
+  link_NotContains: String
+  "首页链接 开头等于"
+  link_StartsWith: String
+  "首页链接 开头不等于"
+  link_NotStartsWith: String
+  "首页链接 结尾等于"
+  link_EndsWith: String
+  "首页链接 结尾不等于"
+  link_NotEndsWith: String
+  "首页链接"
+  link: String
+  "模块代号 不等于"
+  code_Not: String
+  "模块代号 在制定内，如[1,2]"
+  code_In: [String!]
+  "模块代号 不在制定内,如[1,2]"
+  code_NotIn: [String!]
+  "模块代号 小于"
+  code_Lt: String
+  "模块代号 小于等于"
+  code_Lte: String
+  "模块代号 大于"
+  code_Gt: String
+  "模块代号 大于等于"
+  code_Gte: String
+  "模块代号 包含"
+  code_Contains: String
+  "模块代号 不包含"
+  code_NotContains: String
+  "模块代号 开头等于"
+  code_StartsWith: String
+  "模块代号 开头不等于"
+  code_NotStartsWith: String
+  "模块代号 结尾等于"
+  code_EndsWith: String
+  "模块代号 结尾不等于"
+  code_NotEndsWith: String
+  "模块代号"
+  code: String
+  "配置时间 不等于"
+  createDate_Not: Int
+  "配置时间 在制定内，如[1,2]"
+  createDate_In: [Int!]
+  "配置时间 不在制定内,如[1,2]"
+  createDate_NotIn: [Int!]
+  "配置时间 小于"
+  createDate_Lt: Int
+  "配置时间 小于等于"
+  createDate_Lte: Int
+  "配置时间 大于"
+  createDate_Gt: Int
+  "配置时间 大于等于"
+  createDate_Gte: Int
+  "配置时间"
+  createDate: Int
+  AND: [SystemInputWhere!]
+  OR: [SystemInputWhere!]
+  NOT: [SystemInputWhere!]
+}
+
+"模块事件类型"
+input SystemEventInputWhere {
+  ""
+  id_Not: Int
+  ""
+  id_In: [Int!]
+  ""
+  id_NotIn: [Int!]
+  ""
+  id_Lt: Int
+  ""
+  id_Lte: Int
+  ""
+  id_Gt: Int
+  ""
+  id_Gte: Int
+  id: Int
+  "权限名 不等于"
+  title_Not: String
+  "权限名 在制定内，如[1,2]"
+  title_In: [String!]
+  "权限名 不在制定内,如[1,2]"
+  title_NotIn: [String!]
+  "权限名 小于"
+  title_Lt: String
+  "权限名 小于等于"
+  title_Lte: String
+  "权限名 大于"
+  title_Gt: String
+  "权限名 大于等于"
+  title_Gte: String
+  "权限名 包含"
+  title_Contains: String
+  "权限名 不包含"
+  title_NotContains: String
+  "权限名 开头等于"
+  title_StartsWith: String
+  "权限名 开头不等于"
+  title_NotStartsWith: String
+  "权限名 结尾等于"
+  title_EndsWith: String
+  "权限名 结尾不等于"
+  title_NotEndsWith: String
+  "权限名"
+  title: String
+  AND: [SystemEventInputWhere!]
+  OR: [SystemEventInputWhere!]
+  NOT: [SystemEventInputWhere!]
+}
+
+"模块来源权限"
+input SystemRightInputWhere {
+  ""
+  id_Not: Int
+  ""
+  id_In: [Int!]
+  ""
+  id_NotIn: [Int!]
+  ""
+  id_Lt: Int
+  ""
+  id_Lte: Int
+  ""
+  id_Gt: Int
+  ""
+  id_Gte: Int
+  id: Int
+  "权限类型\n页面权限、数据权限、功能权限 不等于"
+  type_Not: String
+  "权限类型\n页面权限、数据权限、功能权限 在制定内，如[1,2]"
+  type_In: [String!]
+  "权限类型\n页面权限、数据权限、功能权限 不在制定内,如[1,2]"
+  type_NotIn: [String!]
+  "权限类型\n页面权限、数据权限、功能权限 小于"
+  type_Lt: String
+  "权限类型\n页面权限、数据权限、功能权限 小于等于"
+  type_Lte: String
+  "权限类型\n页面权限、数据权限、功能权限 大于"
+  type_Gt: String
+  "权限类型\n页面权限、数据权限、功能权限 大于等于"
+  type_Gte: String
+  "权限类型\n页面权限、数据权限、功能权限 包含"
+  type_Contains: String
+  "权限类型\n页面权限、数据权限、功能权限 不包含"
+  type_NotContains: String
+  "权限类型\n页面权限、数据权限、功能权限 开头等于"
+  type_StartsWith: String
+  "权限类型\n页面权限、数据权限、功能权限 开头不等于"
+  type_NotStartsWith: String
+  "权限类型\n页面权限、数据权限、功能权限 结尾等于"
+  type_EndsWith: String
+  "权限类型\n页面权限、数据权限、功能权限 结尾不等于"
+  type_NotEndsWith: String
+  "权限类型\n页面权限、数据权限、功能权限"
+  type: String
+  "权限名 不等于"
+  title_Not: String
+  "权限名 在制定内，如[1,2]"
+  title_In: [String!]
+  "权限名 不在制定内,如[1,2]"
+  title_NotIn: [String!]
+  "权限名 小于"
+  title_Lt: String
+  "权限名 小于等于"
+  title_Lte: String
+  "权限名 大于"
+  title_Gt: String
+  "权限名 大于等于"
+  title_Gte: String
+  "权限名 包含"
+  title_Contains: String
+  "权限名 不包含"
+  title_NotContains: String
+  "权限名 开头等于"
+  title_StartsWith: String
+  "权限名 开头不等于"
+  title_NotStartsWith: String
+  "权限名 结尾等于"
+  title_EndsWith: String
+  "权限名 结尾不等于"
+  title_NotEndsWith: String
+  "权限名"
+  title: String
+  "命名空间 不等于"
+  namespace_Not: String
+  "命名空间 在制定内，如[1,2]"
+  namespace_In: [String!]
+  "命名空间 不在制定内,如[1,2]"
+  namespace_NotIn: [String!]
+  "命名空间 小于"
+  namespace_Lt: String
+  "命名空间 小于等于"
+  namespace_Lte: String
+  "命名空间 大于"
+  namespace_Gt: String
+  "命名空间 大于等于"
+  namespace_Gte: String
+  "命名空间 包含"
+  namespace_Contains: String
+  "命名空间 不包含"
+  namespace_NotContains: String
+  "命名空间 开头等于"
+  namespace_StartsWith: String
+  "命名空间 开头不等于"
+  namespace_NotStartsWith: String
+  "命名空间 结尾等于"
+  namespace_EndsWith: String
+  "命名空间 结尾不等于"
+  namespace_NotEndsWith: String
+  "命名空间"
+  namespace: String
+  "权限代号 不等于"
+  code_Not: String
+  "权限代号 在制定内，如[1,2]"
+  code_In: [String!]
+  "权限代号 不在制定内,如[1,2]"
+  code_NotIn: [String!]
+  "权限代号 小于"
+  code_Lt: String
+  "权限代号 小于等于"
+  code_Lte: String
+  "权限代号 大于"
+  code_Gt: String
+  "权限代号 大于等于"
+  code_Gte: String
+  "权限代号 包含"
+  code_Contains: String
+  "权限代号 不包含"
+  code_NotContains: String
+  "权限代号 开头等于"
+  code_StartsWith: String
+  "权限代号 开头不等于"
+  code_NotStartsWith: String
+  "权限代号 结尾等于"
+  code_EndsWith: String
+  "权限代号 结尾不等于"
+  code_NotEndsWith: String
+  "权限代号"
+  code: String
+  "权限链接 不等于"
+  link_Not: String
+  "权限链接 在制定内，如[1,2]"
+  link_In: [String!]
+  "权限链接 不在制定内,如[1,2]"
+  link_NotIn: [String!]
+  "权限链接 小于"
+  link_Lt: String
+  "权限链接 小于等于"
+  link_Lte: String
+  "权限链接 大于"
+  link_Gt: String
+  "权限链接 大于等于"
+  link_Gte: String
+  "权限链接 包含"
+  link_Contains: String
+  "权限链接 不包含"
+  link_NotContains: String
+  "权限链接 开头等于"
+  link_StartsWith: String
+  "权限链接 开头不等于"
+  link_NotStartsWith: String
+  "权限链接 结尾等于"
+  link_EndsWith: String
+  "权限链接 结尾不等于"
+  link_NotEndsWith: String
+  "权限链接"
+  link: String
+  AND: [SystemRightInputWhere!]
+  OR: [SystemRightInputWhere!]
+  NOT: [SystemRightInputWhere!]
+}
+
+"部门表"
+input DepartmentInputWhere {
+  "部门编号 不等于"
+  id_Not: Int
+  "部门编号 在制定内，如[1,2]"
+  id_In: [Int!]
+  "部门编号 不在制定内,如[1,2]"
+  id_NotIn: [Int!]
+  "部门编号 小于"
+  id_Lt: Int
+  "部门编号 小于等于"
+  id_Lte: Int
+  "部门编号 大于"
+  id_Gt: Int
+  "部门编号 大于等于"
+  id_Gte: Int
+  "部门编号"
+  id: Int
+  "部门名称 不等于"
+  title_Not: String
+  "部门名称 在制定内，如[1,2]"
+  title_In: [String!]
+  "部门名称 不在制定内,如[1,2]"
+  title_NotIn: [String!]
+  "部门名称 小于"
+  title_Lt: String
+  "部门名称 小于等于"
+  title_Lte: String
+  "部门名称 大于"
+  title_Gt: String
+  "部门名称 大于等于"
+  title_Gte: String
+  "部门名称 包含"
+  title_Contains: String
+  "部门名称 不包含"
+  title_NotContains: String
+  "部门名称 开头等于"
+  title_StartsWith: String
+  "部门名称 开头不等于"
+  title_NotStartsWith: String
+  "部门名称 结尾等于"
+  title_EndsWith: String
+  "部门名称 结尾不等于"
+  title_NotEndsWith: String
+  "部门名称"
+  title: String
+  "部门状态 不等于"
+  status_Not: Int
+  "部门状态 在制定内，如[1,2]"
+  status_In: [Int!]
+  "部门状态 不在制定内,如[1,2]"
+  status_NotIn: [Int!]
+  "部门状态 小于"
+  status_Lt: Int
+  "部门状态 小于等于"
+  status_Lte: Int
+  "部门状态 大于"
+  status_Gt: Int
+  "部门状态 大于等于"
+  status_Gte: Int
+  "部门状态"
+  status: Int
+  "创建时间 不等于"
+  createDate_Not: Int
+  "创建时间 在制定内，如[1,2]"
+  createDate_In: [Int!]
+  "创建时间 不在制定内,如[1,2]"
+  createDate_NotIn: [Int!]
+  "创建时间 小于"
+  createDate_Lt: Int
+  "创建时间 小于等于"
+  createDate_Lte: Int
+  "创建时间 大于"
+  createDate_Gt: Int
+  "创建时间 大于等于"
+  createDate_Gte: Int
+  "创建时间"
+  createDate: Int
+  ""
+  domainId_Not: Int
+  ""
+  domainId_In: [Int!]
+  ""
+  domainId_NotIn: [Int!]
+  ""
+  domainId_Lt: Int
+  ""
+  domainId_Lte: Int
+  ""
+  domainId_Gt: Int
+  ""
+  domainId_Gte: Int
+  domainId: Int
+  AND: [DepartmentInputWhere!]
+  OR: [DepartmentInputWhere!]
+  NOT: [DepartmentInputWhere!]
+}
+
+"角色表"
+input RoleInputWhere {
+  "序号 不等于"
+  id_Not: Int
+  "序号 在制定内，如[1,2]"
+  id_In: [Int!]
+  "序号 不在制定内,如[1,2]"
+  id_NotIn: [Int!]
+  "序号 小于"
+  id_Lt: Int
+  "序号 小于等于"
+  id_Lte: Int
+  "序号 大于"
+  id_Gt: Int
+  "序号 大于等于"
+  id_Gte: Int
+  "序号"
+  id: Int
+  "角色标识 不等于"
+  code_Not: String
+  "角色标识 在制定内，如[1,2]"
+  code_In: [String!]
+  "角色标识 不在制定内,如[1,2]"
+  code_NotIn: [String!]
+  "角色标识 小于"
+  code_Lt: String
+  "角色标识 小于等于"
+  code_Lte: String
+  "角色标识 大于"
+  code_Gt: String
+  "角色标识 大于等于"
+  code_Gte: String
+  "角色标识 包含"
+  code_Contains: String
+  "角色标识 不包含"
+  code_NotContains: String
+  "角色标识 开头等于"
+  code_StartsWith: String
+  "角色标识 开头不等于"
+  code_NotStartsWith: String
+  "角色标识 结尾等于"
+  code_EndsWith: String
+  "角色标识 结尾不等于"
+  code_NotEndsWith: String
+  "角色标识"
+  code: String
+  "角色名称 不等于"
+  title_Not: String
+  "角色名称 在制定内，如[1,2]"
+  title_In: [String!]
+  "角色名称 不在制定内,如[1,2]"
+  title_NotIn: [String!]
+  "角色名称 小于"
+  title_Lt: String
+  "角色名称 小于等于"
+  title_Lte: String
+  "角色名称 大于"
+  title_Gt: String
+  "角色名称 大于等于"
+  title_Gte: String
+  "角色名称 包含"
+  title_Contains: String
+  "角色名称 不包含"
+  title_NotContains: String
+  "角色名称 开头等于"
+  title_StartsWith: String
+  "角色名称 开头不等于"
+  title_NotStartsWith: String
+  "角色名称 结尾等于"
+  title_EndsWith: String
+  "角色名称 结尾不等于"
+  title_NotEndsWith: String
+  "角色名称"
+  title: String
+  "角色描述 不等于"
+  desc_Not: String
+  "角色描述 在制定内，如[1,2]"
+  desc_In: [String!]
+  "角色描述 不在制定内,如[1,2]"
+  desc_NotIn: [String!]
+  "角色描述 小于"
+  desc_Lt: String
+  "角色描述 小于等于"
+  desc_Lte: String
+  "角色描述 大于"
+  desc_Gt: String
+  "角色描述 大于等于"
+  desc_Gte: String
+  "角色描述 包含"
+  desc_Contains: String
+  "角色描述 不包含"
+  desc_NotContains: String
+  "角色描述 开头等于"
+  desc_StartsWith: String
+  "角色描述 开头不等于"
+  desc_NotStartsWith: String
+  "角色描述 结尾等于"
+  desc_EndsWith: String
+  "角色描述 结尾不等于"
+  desc_NotEndsWith: String
+  "角色描述"
+  desc: String
+  "创建时间 不等于"
+  createDate_Not: Int
+  "创建时间 在制定内，如[1,2]"
+  createDate_In: [Int!]
+  "创建时间 不在制定内,如[1,2]"
+  createDate_NotIn: [Int!]
+  "创建时间 小于"
+  createDate_Lt: Int
+  "创建时间 小于等于"
+  createDate_Lte: Int
+  "创建时间 大于"
+  createDate_Gt: Int
+  "创建时间 大于等于"
+  createDate_Gte: Int
+  "创建时间"
+  createDate: Int
+  "更新时间 不等于"
+  updateDate_Not: Int
+  "更新时间 在制定内，如[1,2]"
+  updateDate_In: [Int!]
+  "更新时间 不在制定内,如[1,2]"
+  updateDate_NotIn: [Int!]
+  "更新时间 小于"
+  updateDate_Lt: Int
+  "更新时间 小于等于"
+  updateDate_Lte: Int
+  "更新时间 大于"
+  updateDate_Gt: Int
+  "更新时间 大于等于"
+  updateDate_Gte: Int
+  "更新时间"
+  updateDate: Int
+  AND: [RoleInputWhere!]
+  OR: [RoleInputWhere!]
+  NOT: [RoleInputWhere!]
+}
+
+input RoleGroupInputWhere {
+  ""
+  id_Not: Int
+  ""
+  id_In: [Int!]
+  ""
+  id_NotIn: [Int!]
+  ""
+  id_Lt: Int
+  ""
+  id_Lte: Int
+  ""
+  id_Gt: Int
+  ""
+  id_Gte: Int
+  id: Int
+  "角色组名 不等于"
+  title_Not: String
+  "角色组名 在制定内，如[1,2]"
+  title_In: [String!]
+  "角色组名 不在制定内,如[1,2]"
+  title_NotIn: [String!]
+  "角色组名 小于"
+  title_Lt: String
+  "角色组名 小于等于"
+  title_Lte: String
+  "角色组名 大于"
+  title_Gt: String
+  "角色组名 大于等于"
+  title_Gte: String
+  "角色组名 包含"
+  title_Contains: String
+  "角色组名 不包含"
+  title_NotContains: String
+  "角色组名 开头等于"
+  title_StartsWith: String
+  "角色组名 开头不等于"
+  title_NotStartsWith: String
+  "角色组名 结尾等于"
+  title_EndsWith: String
+  "角色组名 结尾不等于"
+  title_NotEndsWith: String
+  "角色组名"
+  title: String
+  "角色组简介 不等于"
+  desc_Not: String
+  "角色组简介 在制定内，如[1,2]"
+  desc_In: [String!]
+  "角色组简介 不在制定内,如[1,2]"
+  desc_NotIn: [String!]
+  "角色组简介 小于"
+  desc_Lt: String
+  "角色组简介 小于等于"
+  desc_Lte: String
+  "角色组简介 大于"
+  desc_Gt: String
+  "角色组简介 大于等于"
+  desc_Gte: String
+  "角色组简介 包含"
+  desc_Contains: String
+  "角色组简介 不包含"
+  desc_NotContains: String
+  "角色组简介 开头等于"
+  desc_StartsWith: String
+  "角色组简介 开头不等于"
+  desc_NotStartsWith: String
+  "角色组简介 结尾等于"
+  desc_EndsWith: String
+  "角色组简介 结尾不等于"
+  desc_NotEndsWith: String
+  "角色组简介"
+  desc: String
+  AND: [RoleGroupInputWhere!]
+  OR: [RoleGroupInputWhere!]
+  NOT: [RoleGroupInputWhere!]
+}
+
+input SafetyScoreRuleInputWhere {
+  ""
+  id_Not: Int
+  ""
+  id_In: [Int!]
+  ""
+  id_NotIn: [Int!]
+  ""
+  id_Lt: Int
+  ""
+  id_Lte: Int
+  ""
+  id_Gt: Int
+  ""
+  id_Gte: Int
+  id: Int
+  "规则名 不等于"
+  title_Not: String
+  "规则名 在制定内，如[1,2]"
+  title_In: [String!]
+  "规则名 不在制定内,如[1,2]"
+  title_NotIn: [String!]
+  "规则名 小于"
+  title_Lt: String
+  "规则名 小于等于"
+  title_Lte: String
+  "规则名 大于"
+  title_Gt: String
+  "规则名 大于等于"
+  title_Gte: String
+  "规则名 包含"
+  title_Contains: String
+  "规则名 不包含"
+  title_NotContains: String
+  "规则名 开头等于"
+  title_StartsWith: String
+  "规则名 开头不等于"
+  title_NotStartsWith: String
+  "规则名 结尾等于"
+  title_EndsWith: String
+  "规则名 结尾不等于"
+  title_NotEndsWith: String
+  "规则名"
+  title: String
+  "代号 不等于"
+  code_Not: String
+  "代号 在制定内，如[1,2]"
+  code_In: [String!]
+  "代号 不在制定内,如[1,2]"
+  code_NotIn: [String!]
+  "代号 小于"
+  code_Lt: String
+  "代号 小于等于"
+  code_Lte: String
+  "代号 大于"
+  code_Gt: String
+  "代号 大于等于"
+  code_Gte: String
+  "代号 包含"
+  code_Contains: String
+  "代号 不包含"
+  code_NotContains: String
+  "代号 开头等于"
+  code_StartsWith: String
+  "代号 开头不等于"
+  code_NotStartsWith: String
+  "代号 结尾等于"
+  code_EndsWith: String
+  "代号 结尾不等于"
+  code_NotEndsWith: String
+  "代号"
+  code: String
+  "分值 不等于"
+  score_Not: Int
+  "分值 在制定内，如[1,2]"
+  score_In: [Int!]
+  "分值 不在制定内,如[1,2]"
+  score_NotIn: [Int!]
+  "分值 小于"
+  score_Lt: Int
+  "分值 小于等于"
+  score_Lte: Int
+  "分值 大于"
+  score_Gt: Int
+  "分值 大于等于"
+  score_Gte: Int
+  "分值"
+  score: Int
+  "时间 不等于"
+  createDate_Not: Int
+  "时间 在制定内，如[1,2]"
+  createDate_In: [Int!]
+  "时间 不在制定内,如[1,2]"
+  createDate_NotIn: [Int!]
+  "时间 小于"
+  createDate_Lt: Int
+  "时间 小于等于"
+  createDate_Lte: Int
+  "时间 大于"
+  createDate_Gt: Int
+  "时间 大于等于"
+  createDate_Gte: Int
+  "时间"
+  createDate: Int
+  AND: [SafetyScoreRuleInputWhere!]
+  OR: [SafetyScoreRuleInputWhere!]
+  NOT: [SafetyScoreRuleInputWhere!]
+}
+
+"用户表"
+input UserInputOrder {
+  "用户编号\n排序可选值为ASC或者DESC"
+  id: String
+  "用户名\n排序可选值为ASC或者DESC"
+  username: String
+  "邮箱\n排序可选值为ASC或者DESC"
+  email: String
+  "头像\n排序可选值为ASC或者DESC"
+  avatar: String
+  "电话号码\n排序可选值为ASC或者DESC"
+  mobile: String
+  "密码\n排序可选值为ASC或者DESC"
+  password: String
+  "1: 账户正常 0:未绑定 -1:刚解冻 -2: 已被封\n排序可选值为ASC或者DESC"
+  status: String
+  "随机码\n排序可选值为ASC或者DESC"
+  randomCode: String
+  "密码是否被重置\n排序可选值为ASC或者DESC"
+  isRestPassword: String
+  "密码更改时间\n排序可选值为ASC或者DESC"
+  passwordDate: String
+  "创建时间\n排序可选值为ASC或者DESC"
+  createDate: String
+  "这个用户的创建人是谁\n排序可选值为ASC或者DESC"
+  createUser: String
+  "创建人的uid\n排序可选值为ASC或者DESC"
+  createUserId: String
+  createUsers: String
+  "安全分\n排序可选值为ASC或者DESC"
+  safetyScore: String
+  "用户的代办事项\n排序可选值为ASC或者DESC"
+  toDoItems: String
+  "发布者\n排序可选值为ASC或者DESC"
+  mineToDoItems: String
+  "用户岗位\n排序可选值为ASC或者DESC"
+  stations: String
+  "用户的登录记录\n排序可选值为ASC或者DESC"
+  loginLogs: String
+  "用户的安全分扣分记录\n排序可选值为ASC或者DESC"
+  safetyScoreLogs: String
+  createStations: String
+}
+
+"子系统 子模块"
+input SystemInputOrder {
+  id: String
+  "模块名\n排序可选值为ASC或者DESC"
+  title: String
+  "系统缩略图片\n排序可选值为ASC或者DESC"
+  image: String
+  "首页链接\n排序可选值为ASC或者DESC"
+  link: String
+  "模块代号\n排序可选值为ASC或者DESC"
+  code: String
+  "模块权限\n排序可选值为ASC或者DESC"
+  rights: String
+  "模块事件\n排序可选值为ASC或者DESC"
+  events: String
+  "代办事项\n排序可选值为ASC或者DESC"
+  toDoItems: String
+  "配置时间\n排序可选值为ASC或者DESC"
+  createDate: String
+}
+
+"模块事件类型"
+input SystemEventInputOrder {
+  id: String
+  "权限名\n排序可选值为ASC或者DESC"
+  title: String
+  "来源模块\n排序可选值为ASC或者DESC"
+  fromSystem: String
+  "代办事项\n排序可选值为ASC或者DESC"
+  toDoItems: String
+}
+
+"模块来源权限"
+input SystemRightInputOrder {
+  id: String
+  "权限类型\n页面权限、数据权限、功能权限\n排序可选值为ASC或者DESC"
+  type: String
+  "权限名\n排序可选值为ASC或者DESC"
+  title: String
+  "命名空间\n排序可选值为ASC或者DESC"
+  namespace: String
+  "权限代号\n排序可选值为ASC或者DESC"
+  code: String
+  "权限链接\n排序可选值为ASC或者DESC"
+  link: String
+  "来源模块\n排序可选值为ASC或者DESC"
+  fromSystem: String
+  "可用角色\n排序可选值为ASC或者DESC"
+  toRoles: String
+}
+
+"部门表"
+input DepartmentInputOrder {
+  "部门编号\n排序可选值为ASC或者DESC"
+  id: String
+  "部门名称\n排序可选值为ASC或者DESC"
+  title: String
+  "部门状态\n排序可选值为ASC或者DESC"
+  status: String
+  "是否显示\n排序可选值为ASC或者DESC"
+  shown: String
+  "上级部门\n排序可选值为ASC或者DESC"
+  parent: String
+  "创建时间\n排序可选值为ASC或者DESC"
+  createDate: String
+  "下级部门\n排序可选值为ASC或者DESC"
+  children: String
+  "一个部门可以有多个岗位\n排序可选值为ASC或者DESC"
+  stations: String
+  "域\n排序可选值为ASC或者DESC"
+  domain: String
+  domainId: String
+}
+
+"角色表"
+input RoleInputOrder {
+  "序号\n排序可选值为ASC或者DESC"
+  id: String
+  "角色标识\n排序可选值为ASC或者DESC"
+  code: String
+  "角色名称\n排序可选值为ASC或者DESC"
+  title: String
+  "角色描述\n排序可选值为ASC或者DESC"
+  desc: String
+  "一个角色可以有多个权限\n排序可选值为ASC或者DESC"
+  rights: String
+  "一个角色 可以使用某个岗位的职员\n排序可选值为ASC或者DESC"
+  canUseStations: String
+  "创建时间\n排序可选值为ASC或者DESC"
+  createDate: String
+  "更新时间\n排序可选值为ASC或者DESC"
+  updateDate: String
+  "一个角色 被那几个角色组使用\n排序可选值为ASC或者DESC"
+  group: String
+}
+
+input RoleGroupInputOrder {
+  id: String
+  "角色组名\n排序可选值为ASC或者DESC"
+  title: String
+  "角色组简介\n排序可选值为ASC或者DESC"
+  desc: String
+  "拥有角色\n排序可选值为ASC或者DESC"
+  roles: String
+  "用到此角色组的岗位\n排序可选值为ASC或者DESC"
+  stations: String
+}
+
+input SafetyScoreRuleInputOrder {
+  id: String
+  "规则名\n排序可选值为ASC或者DESC"
+  title: String
+  "代号\n排序可选值为ASC或者DESC"
+  code: String
+  "分值\n排序可选值为ASC或者DESC"
+  score: String
+  "是否替换\n排序可选值为ASC或者DESC"
+  isReplace: String
+  "记录\n排序可选值为ASC或者DESC"
+  logs: String
+  "时间\n排序可选值为ASC或者DESC"
+  createDate: String
+}
+
+type Query {
+  "通过指定条件获取一条数据"
+  getUser(
+    "条件"
+    entity: UserInputWhere!
+  ): User
+  "通过指定条件获取一条数据"
+  getSystem(
+    "条件"
+    entity: SystemInputWhere!
+  ): System
+  "通过指定条件获取一条数据"
+  getSystemEvent(
+    "条件"
+    entity: SystemEventInputWhere!
+  ): SystemEvent
+  "通过指定条件获取一条数据"
+  getSystemRight(
+    "条件"
+    entity: SystemRightInputWhere!
+  ): SystemRight
+  "通过指定条件获取一条数据"
+  getDepartment(
+    "条件"
+    entity: DepartmentInputWhere!
+  ): Department
+  "通过指定条件获取一条数据"
+  getRole(
+    "条件"
+    entity: RoleInputWhere!
+  ): Role
+  "通过指定条件获取一条数据"
+  getStation(
+    "条件"
+    entity: StationInputWhere!
+  ): Station
+  "通过指定条件获取一条数据"
+  getToDoItem(
+    "条件"
+    entity: ToDoItemInputWhere!
+  ): ToDoItem
+  "通过指定条件获取一条数据"
+  getRoleGroup(
+    "条件"
+    entity: RoleGroupInputWhere!
+  ): RoleGroup
+  "通过指定条件获取一条数据"
+  getUserLoginLog(
+    "条件"
+    entity: UserLoginLogInputWhere!
+  ): UserLoginLog
+  "通过指定条件获取一条数据"
+  getSafetyScoreLog(
+    "条件"
+    entity: SafetyScoreLogInputWhere!
+  ): SafetyScoreLog
+  "通过指定条件获取一条数据"
+  getSafetyScoreRule(
+    "条件"
+    entity: SafetyScoreRuleInputWhere!
+  ): SafetyScoreRule
+  "通过制定条件获取一组数据"
+  findUser(
+    "条件"
+    entity: UserInputWhere!
+    order: UserInputOrder!
+    limit: PageLimitInput
+  ): [User]
+  "通过制定条件获取一组数据"
+  findSystem(
+    "条件"
+    entity: SystemInputWhere!
+    order: SystemInputOrder!
+    limit: PageLimitInput
+  ): [System]
+  "通过制定条件获取一组数据"
+  findSystemEvent(
+    "条件"
+    entity: SystemEventInputWhere!
+    order: SystemEventInputOrder!
+    limit: PageLimitInput
+  ): [SystemEvent]
+  "通过制定条件获取一组数据"
+  findSystemRight(
+    "条件"
+    entity: SystemRightInputWhere!
+    order: SystemRightInputOrder!
+    limit: PageLimitInput
+  ): [SystemRight]
+  "通过制定条件获取一组数据"
+  findDepartment(
+    "条件"
+    entity: DepartmentInputWhere!
+    order: DepartmentInputOrder!
+    limit: PageLimitInput
+  ): [Department]
+  "通过制定条件获取一组数据"
+  findRole(
+    "条件"
+    entity: RoleInputWhere!
+    order: RoleInputOrder!
+    limit: PageLimitInput
+  ): [Role]
+  "通过制定条件获取一组数据"
+  findStation(
+    "条件"
+    entity: StationInputWhere!
+    order: StationInputOrder!
+    limit: PageLimitInput
+  ): [Station]
+  "通过制定条件获取一组数据"
+  findToDoItem(
+    "条件"
+    entity: ToDoItemInputWhere!
+    order: ToDoItemInputOrder!
+    limit: PageLimitInput
+  ): [ToDoItem]
+  "通过制定条件获取一组数据"
+  findRoleGroup(
+    "条件"
+    entity: RoleGroupInputWhere!
+    order: RoleGroupInputOrder!
+    limit: PageLimitInput
+  ): [RoleGroup]
+  "通过制定条件获取一组数据"
+  findUserLoginLog(
+    "条件"
+    entity: UserLoginLogInputWhere!
+    order: UserLoginLogInputOrder!
+    limit: PageLimitInput
+  ): [UserLoginLog]
+  "通过制定条件获取一组数据"
+  findSafetyScoreLog(
+    "条件"
+    entity: SafetyScoreLogInputWhere!
+    order: SafetyScoreLogInputOrder!
+    limit: PageLimitInput
+  ): [SafetyScoreLog]
+  "通过制定条件获取一组数据"
+  findSafetyScoreRule(
+    "条件"
+    entity: SafetyScoreRuleInputWhere!
+    order: SafetyScoreRuleInputOrder!
+    limit: PageLimitInput
+  ): [SafetyScoreRule]
+  "删除"
+  deleteUser(
+    "根据id删除"
+    id: Int!
+  ): Boolean
+  "删除"
+  deleteSystem(
+    "根据id删除"
+    id: Int!
+  ): Boolean
+  "删除"
+  deleteSystemEvent(
+    "根据id删除"
+    id: Int!
+  ): Boolean
+  "删除"
+  deleteSystemRight(
+    "根据id删除"
+    id: Int!
+  ): Boolean
+  "删除"
+  deleteDepartment(
+    "根据id删除"
+    id: Int!
+  ): Boolean
+  "删除"
+  deleteRole(
+    "根据id删除"
+    id: Int!
+  ): Boolean
+  "删除"
+  deleteStation(
+    "根据id删除"
+    id: Int!
+  ): Boolean
+  "删除"
+  deleteToDoItem(
+    "根据id删除"
+    id: Int!
+  ): Boolean
+  "删除"
+  deleteRoleGroup(
+    "根据id删除"
+    id: Int!
+  ): Boolean
+  "删除"
+  deleteUserLoginLog(
+    "根据id删除"
+    id: Int!
+  ): Boolean
+  "删除"
+  deleteSafetyScoreLog(
+    "根据id删除"
+    id: Int!
+  ): Boolean
+  "删除"
+  deleteSafetyScoreRule(
+    "根据id删除"
+    id: Int!
+  ): Boolean
+}
+
+type Mutation {
+  "没有就插入，有就更新"
+  saveUser(
+    "要保存的数据"
+    entity: UserInput!
+  ): User
+  "没有就插入，有就更新"
+  saveSystem(
+    "要保存的数据"
+    entity: SystemInput!
+  ): System
+  "没有就插入，有就更新"
+  saveSystemEvent(
+    "要保存的数据"
+    entity: SystemEventInput!
+  ): SystemEvent
+  "没有就插入，有就更新"
+  saveSystemRight(
+    "要保存的数据"
+    entity: SystemRightInput!
+  ): SystemRight
+  "没有就插入，有就更新"
+  saveDepartment(
+    "要保存的数据"
+    entity: DepartmentInput!
+  ): Department
+  "没有就插入，有就更新"
+  saveRole(
+    "要保存的数据"
+    entity: RoleInput!
+  ): Role
+  "没有就插入，有就更新"
+  saveStation(
+    "要保存的数据"
+    entity: StationInput!
+  ): Station
+  "没有就插入，有就更新"
+  saveToDoItem(
+    "要保存的数据"
+    entity: ToDoItemInput!
+  ): ToDoItem
+  "没有就插入，有就更新"
+  saveRoleGroup(
+    "要保存的数据"
+    entity: RoleGroupInput!
+  ): RoleGroup
+  "没有就插入，有就更新"
+  saveUserLoginLog(
+    "要保存的数据"
+    entity: UserLoginLogInput!
+  ): UserLoginLog
+  "没有就插入，有就更新"
+  saveSafetyScoreLog(
+    "要保存的数据"
+    entity: SafetyScoreLogInput!
+  ): SafetyScoreLog
+  "没有就插入，有就更新"
+  saveSafetyScoreRule(
+    "要保存的数据"
+    entity: SafetyScoreRuleInput!
+  ): SafetyScoreRule
+  "插入数据"
+  insertUser(
+    "要插入的数据"
+    entity: UserInput!
+  ): User
+  "插入数据"
+  insertSystem(
+    "要插入的数据"
+    entity: SystemInput!
+  ): System
+  "插入数据"
+  insertSystemEvent(
+    "要插入的数据"
+    entity: SystemEventInput!
+  ): SystemEvent
+  "插入数据"
+  insertSystemRight(
+    "要插入的数据"
+    entity: SystemRightInput!
+  ): SystemRight
+  "插入数据"
+  insertDepartment(
+    "要插入的数据"
+    entity: DepartmentInput!
+  ): Department
+  "插入数据"
+  insertRole(
+    "要插入的数据"
+    entity: RoleInput!
+  ): Role
+  "插入数据"
+  insertStation(
+    "要插入的数据"
+    entity: StationInput!
+  ): Station
+  "插入数据"
+  insertToDoItem(
+    "要插入的数据"
+    entity: ToDoItemInput!
+  ): ToDoItem
+  "插入数据"
+  insertRoleGroup(
+    "要插入的数据"
+    entity: RoleGroupInput!
+  ): RoleGroup
+  "插入数据"
+  insertUserLoginLog(
+    "要插入的数据"
+    entity: UserLoginLogInput!
+  ): UserLoginLog
+  "插入数据"
+  insertSafetyScoreLog(
+    "要插入的数据"
+    entity: SafetyScoreLogInput!
+  ): SafetyScoreLog
+  "插入数据"
+  insertSafetyScoreRule(
+    "要插入的数据"
+    entity: SafetyScoreRuleInput!
+  ): SafetyScoreRule
+}

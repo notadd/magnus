@@ -1,0 +1,35 @@
+{
+	"name": "@notadd/magnus-grpc",
+	"version": "3.0.1",
+	"description": "> TODO: description",
+	"author": "imeepos <1037483576@qq.com>",
+	"homepage": "https://github.com/notadd/magnus/tree/master/libs/grpc#readme",
+	"license": "ISC",
+	"main": "lib/index.js",
+	"directories": {
+		"lib": "lib",
+		"test": "__tests__"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"files": [
+		"lib"
+	],
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/notadd/magnus.git"
+	},
+	"scripts": {
+		"test": "echo \"Error: run tests from root\" && exit 1"
+	},
+	"bugs": {
+		"url": "https://github.com/notadd/magnus/issues"
+	},
+	"dependencies": {
+		"@nestjs/common": "^6.4.1",
+		"@types/multimatch": "^2.1.3",
+		"tslib": "^1.10.0"
+	},
+	"gitHead": "5bcd4e561d2a16cb8448eb1b270a92ea5ab6a752"
+}

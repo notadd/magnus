@@ -1,0 +1,14 @@
+{
+	"inputs": [ "demo/src/lib/**/*.ts" ],
+	"output": "demo/magnus",
+	"assets": "demo/assets",
+	"name": "demo",
+	"client": [ "demo/src/**/*.graphql" ],
+	"hasGrpc": true,
+	"runner": {
+		"name": "runner",
+		"path": "../runner.ts"
+	},
+	"types": "demo/magnus/demo/magnus.server",
+	"def": "demo/assets/demo/magnus.server.graphql"
+}

@@ -1,0 +1,421 @@
+scalar Double
+
+scalar Float
+
+scalar Int32
+
+scalar Int64
+
+scalar Uint32
+
+scalar Sint32
+
+scalar Fixed32
+
+scalar Sfixed32
+
+scalar Uint64
+
+scalar Sint64
+
+scalar Fixed64
+
+scalar Sfixed64
+
+scalar Bool
+
+scalar Bytes
+
+scalar Empty
+
+scalar Error
+
+scalar Json
+
+scalar Timestamp
+
+scalar Date
+
+type User {
+  "用户id"
+  id: Int!
+  "用户名"
+  username: String!
+  "用户状态 0未绑定，1正常，-1刚解锁，-2被锁定"
+  status: Int!
+  "随机码"
+  randomCode: String!
+  "是否重置密码"
+  isRestPassword: Boolean!
+  "安全分"
+  safetyScore: Int!
+}
+
+type GetUserByUserNameResult {
+  "404 没有找到\n200 成功"
+  code: String!
+  data: User
+}
+
+input GetUserByUserNameInput {
+  "用户名"
+  username: String!
+}
+
+type VerifyUsernameAndPasswordAreCorrectResult {
+  "是否验证通过"
+  ok: Boolean!
+  "JsonWebToken"
+  jsonWebToken: String
+}
+
+input VerifyUsernameAndPasswordAreCorrectInput {
+  "用户名"
+  username: String!
+  "密码"
+  password: String!
+}
+
+"返回的参数"
+type FindStationData {
+  "序号"
+  id: Int!
+  "岗位名称"
+  positionTitle: String!
+  "岗位编号"
+  jobNumber: String!
+  "岗位描述"
+  jobDescription: String!
+  "拥有角色"
+  haveRole: [String]!
+  "创建人"
+  createUserName: String!
+  "创建时间"
+  createDate: String!
+}
+
+"FindStation返回结果"
+type FindStationResult {
+  "200 查询成功"
+  code: Int!
+  message: String!
+  data: [FindStationData]
+}
+
+"根据条件查询批量岗位"
+input FindStationInput {
+  "页码"
+  page: Int!
+  "每页数量"
+  psize: Int!
+  "岗位名称"
+  positionTitle: String!
+  "创建人"
+  createUserUsername: String!
+  "创建时间 开始and结束"
+  createDate: Empty!
+}
+
+type DeleteStationResult {
+  "200为删除成功 -200 删除失败"
+  code: Int!
+  "删除成功 or 删除失败"
+  message: String!
+}
+
+input DeleteStationInput {
+  "岗位id"
+  id: Int!
+}
+
+"禁用岗位返回参数"
+type ForbidStationResult {
+  "200禁用成功 -200禁用失败"
+  code: Int!
+  "禁用成功 or 禁用失败"
+  message: String!
+}
+
+"禁用岗位的id"
+input ForbidStationInput {
+  id: Int!
+}
+
+"GetStation的岗位信息"
+type GetStationData {
+  "部门"
+  department: String!
+  "岗位编号"
+  jobNumber: String!
+  "岗位名称"
+  positionTitle: String!
+  "岗位描述"
+  jobDescription: String!
+  "岗位职责"
+  jobResponsibilities: String!
+  "岗位要求"
+  jobRequirements: String!
+  "角色组"
+  roleGroup: String!
+  "状态"
+  status: Int!
+}
+
+"根据id获取岗位get"
+type GetStationResult {
+  "200 获取成功, -200未查询到该岗位"
+  code: Int!
+  message: String!
+  data: GetStationData
+}
+
+"获取岗位的条件,id"
+input GetStationInput {
+  id: Int!
+}
+
+"获取所有岗位得数据"
+type GetAllStationData {
+  id: Int!
+  title: String!
+}
+
+"通过部门获取所有岗位返回的结果"
+type GetAllStationByDepartmentResult {
+  code: Int!
+  message: String!
+  data: [GetAllStationData]
+}
+
+"部门id"
+input GetAllStationByDepartmentInput {
+  departmentId: Int!
+}
+
+"获取所有用户的数据"
+type GetAllUserData {
+  "用户名"
+  title: String!
+  "用户id"
+  id: String!
+}
+
+"通过岗位获取所有用户返回的结果"
+type GetAllUserByStationResult {
+  code: Int!
+  message: String!
+  data: [GetAllUserData]
+}
+
+"通过岗位获取用户的参数"
+input GetAllUserByStationInput {
+  stationId: Int!
+}
+
+type SaveUserData {
+  id: Int!
+  username: String!
+  phoneNumber: String!
+  email: String!
+  renGang: [String]!
+  bindingStaff: String!
+}
+
+type SaveUserResult {
+  "返回码"
+  code: Int!
+  "返回信息"
+  message: String!
+  "返回数据"
+  data: SaveUserData
+}
+
+input SaveUserInput {
+  "用户id"
+  id: Int!
+  "用户名称"
+  username: String!
+  "电话号码"
+  phoneNumber: String!
+  "电子邮箱"
+  email: String!
+  "任岗"
+  renGang: [Int]!
+  "绑定人员"
+  bindingStaff: Int!
+}
+
+type DeleteUserResult {
+  "返回码"
+  code: Int!
+  "返回信息"
+  message: String!
+}
+
+input DeleteUserInput {
+  "用户id"
+  uid: Int!
+}
+
+type FindUserData {
+  "序号"
+  id: Int!
+  "用户名"
+  username: String!
+  "手机号"
+  mobile: String!
+  "部门名称"
+  departmentTitle: String!
+  "角色"
+  roles: [String]!
+  "状态"
+  status: Int!
+  "创建时间"
+  createDate: Int!
+  "创建人"
+  createUserName: String!
+}
+
+type FindUserResult {
+  "返回码"
+  code: Int!
+  "返回信息"
+  message: String!
+  "返回数据"
+  data: [FindUserData]
+}
+
+input FindUserInput {
+  "页码"
+  page: Int!
+  "每页数量"
+  psize: Int!
+  "用户名"
+  username: String!
+  "手机号"
+  mobile: String!
+  "状态"
+  status: Int!
+  "创建时间  开始and结束"
+  createUserId: Int!
+  departmentId: Int!
+}
+
+type ForbidUserResult {
+  "返回码"
+  code: Int!
+  "返回信息"
+  message: String!
+}
+
+input ForbidUserInput {
+  "用户Id"
+  uid: Int!
+  "用户状态"
+  status: Int!
+}
+
+type GetUserResultData {
+  "用户id"
+  id: Int!
+  "用户名称"
+  username: String!
+  "电话号码"
+  phoneNumber: String!
+  "电子邮箱"
+  email: String!
+  "任岗"
+  renGang: [String]!
+  "绑定人员"
+  bindingStaff: String!
+  "状态"
+  status: Int!
+  "创建时间"
+  createDate: String!
+  "创建人"
+  createUserUsername: String!
+}
+
+type GetUserResult {
+  "返回码"
+  code: Int!
+  "返回信息"
+  message: String!
+  "返回数据"
+  data: GetUserResultData
+}
+
+input GetUserInput {
+  id: Int!
+}
+
+type UserCenterAuth {
+  "根据用户名获取用户信息"
+  getUserByUserName(
+    "用户名"
+    entity: GetUserByUserNameInput!
+  ): GetUserByUserNameResult
+  "验证用户名密码是否正确"
+  verifyUsernameAndPasswordAreCorrect(
+    "用户名和密码"
+    entity: VerifyUsernameAndPasswordAreCorrectInput!
+  ): VerifyUsernameAndPasswordAreCorrectResult
+}
+
+type UserCenterStation {
+  "根据查询条件查询符合条件的所有岗位"
+  findStation(
+    "查询条件"
+    where: FindStationInput!
+  ): FindStationResult
+  "根据岗位id删除岗位"
+  deleteStation(
+    "删除条件,岗位id"
+    where: DeleteStationInput!
+  ): DeleteStationResult
+  "根据岗位id禁用岗位"
+  forbidStation(
+    "禁用条件,岗位id"
+    where: ForbidStationInput!
+  ): ForbidStationResult
+  "根据岗位id获取岗位信息"
+  getStation(where: GetStationInput!): GetStationResult
+  "根据部门id获取其下所有的岗位"
+  getAllStartionByDepartment(
+    "部门Id"
+    where: GetAllStationByDepartmentInput!
+  ): GetAllStationByDepartmentResult
+  "根据岗位id查询所有的用户"
+  getAllUserByStation(
+    "查询的参数,岗位的id"
+    where: GetAllUserByStationInput!
+  ): GetAllUserByStationResult
+}
+
+type UserCenterUser {
+  "添加用户:如果id已存在为更新用户,不存在为插入用户"
+  saveUser(
+    ""
+    user: SaveUserInput!
+  ): SaveUserResult
+  "删除用户"
+  deleteUser(
+    ""
+    where: DeleteUserInput!
+  ): DeleteUserResult
+  "查询所有用户"
+  findUser(
+    ""
+    entity: FindUserInput!
+  ): FindUserResult
+  "用户禁用"
+  forbidUser(
+    ""
+    where: ForbidUserInput!
+  ): ForbidUserResult
+  "根据Id查询用户详情"
+  getUser(
+    ""
+    entity: GetUserInput!
+  ): GetUserResult
+}

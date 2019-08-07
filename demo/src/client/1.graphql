@@ -1,0 +1,13 @@
+query getUser($entity: UserInput!){
+    getUser(entity: $entity){
+        id,
+        email
+    }
+}
+
+query getStation($entity: UserInput!){
+    getStation(entity: $entity){
+        id,
+        title
+    }
+}

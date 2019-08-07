@@ -1,0 +1,34 @@
+{
+  "name": "@notadd/magnus-graphql",
+  "version": "3.0.3",
+  "description": "> TODO: description",
+  "author": "imeepos <1037483576@qq.com>",
+  "homepage": "https://github.com/notadd/magnus/tree/master/libs/graphql#readme",
+  "license": "ISC",
+  "main": "lib/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/notadd/magnus.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/notadd/magnus/issues"
+  },
+  "gitHead": "3cdb10e40f409d0acd323e2b31297e40e747a8db",
+  "dependencies": {
+    "graphql": "^14.4.2",
+    "tslib": "^1.10.0"
+  }
+}

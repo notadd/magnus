@@ -1,0 +1,167 @@
+scalar Double
+
+scalar Float
+
+scalar Int32
+
+scalar Int64
+
+scalar Uint32
+
+scalar Sint32
+
+scalar Fixed32
+
+scalar Sfixed32
+
+scalar Uint64
+
+scalar Sint64
+
+scalar Fixed64
+
+scalar Sfixed64
+
+scalar Bool
+
+scalar Bytes
+
+scalar Empty
+
+scalar Error
+
+scalar Json
+
+scalar Timestamp
+
+scalar Date
+
+type Event {
+  title: String!
+  desc: String!
+  count: Int!
+}
+
+type Module {
+  title: String!
+  events: [Event]!
+}
+
+type GetUserToDoItemsByStartAndEndResult {
+  list: [Module]!
+}
+
+input GetUserToDoItemsByStartAndEndInput {
+  uid: Int!
+  start: String!
+  end: String!
+}
+
+type FindRolePermission {
+  id: Int!
+  title: String!
+}
+
+type FindRoleDate {
+  "序号"
+  id: Int!
+  "角色名称"
+  roleName: String!
+  "角色标识"
+  roleIdentification: String!
+  "角色描述"
+  roleDesc: String!
+  "数据权限"
+  dataPermission: [FindRolePermission]!
+  "创建人"
+  createUserName: String!
+  "父级角色"
+  parentRoleId: Int!
+  parentRoleName: String!
+  "创建时间"
+  createDate: String!
+}
+
+type FindRoleResult {
+  "返回码"
+  code: Int!
+  "返回信息"
+  message: String!
+  "返回数据"
+  data: [FindRoleDate]
+}
+
+input FindRoleInput {
+  "页码"
+  page: Int!
+  "每页数量"
+  psize: Int!
+  "角色名"
+  roleName: String!
+  "创建人"
+  createUserUsername: String!
+  "创建时间 开始and结束"
+  createDate: Empty!
+}
+
+type Role {
+  "角色名称"
+  title: String!
+  "角色id"
+  id: Int!
+}
+
+type SaveResultData {
+  "角色id"
+  id: Int!
+  "角色名称"
+  roleName: String!
+  "角色标识"
+  roleIdentification: String!
+  "角色描述"
+  roleDescription: String!
+  "基础角色"
+  basicRole: [Role]!
+  "互斥角色"
+  mutexRole: [Role]!
+  "状态"
+  status: Int!
+  "创建日期"
+  createDate: Int!
+  "创建人"
+  createUserName: String!
+}
+
+type SaveRoleResult {
+  "返回码"
+  code: Int!
+  "返回信息"
+  message: String!
+  "返回数据"
+  data: SaveResultData
+}
+
+input SaveRoleInput {
+  "角色id"
+  id: Int!
+  "角色名称"
+  roleName: String!
+  "角色标识"
+  roleIdentification: String!
+  "角色描述"
+  roleDescription: String!
+  "基础角色"
+  basicRole: [Int]!
+  "互斥角色"
+  mutexRole: [Int]!
+}
+
+type StatisticalCenter {
+  "获取指定时间范围内的代办事项"
+  getUserToDoItemsByStartAndEnd(entity: GetUserToDoItemsByStartAndEndInput!): GetUserToDoItemsByStartAndEndResult
+}
+
+type RoleController {
+  findRole(entity: FindRoleInput!): FindRoleResult
+  saveRole(entity: SaveRoleInput!): SaveRoleResult
+}

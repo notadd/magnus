@@ -1,0 +1,37 @@
+scalar Double
+
+scalar Float
+
+scalar Int32
+
+scalar Int64
+
+scalar Uint32
+
+scalar Sint32
+
+scalar Fixed32
+
+scalar Sfixed32
+
+scalar Uint64
+
+scalar Sint64
+
+scalar Fixed64
+
+scalar Sfixed64
+
+scalar Bool
+
+scalar Bytes
+
+scalar Empty
+
+scalar Error
+
+scalar Json
+
+scalar Timestamp
+
+scalar Date

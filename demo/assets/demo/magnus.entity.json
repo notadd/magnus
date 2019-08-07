@@ -1,0 +1,313 @@
+{
+  "User": [
+    {
+      "name": "createUser",
+      "relation": "ManyToOne",
+      "entity": "User"
+    },
+    {
+      "name": "createUsers",
+      "relation": "OneToMany",
+      "entity": "User"
+    },
+    {
+      "name": "toDoItems",
+      "relation": "OneToMany",
+      "entity": "ToDoItem"
+    },
+    {
+      "name": "mineToDoItems",
+      "relation": "OneToMany",
+      "entity": "ToDoItem"
+    },
+    {
+      "name": "getToDoItems",
+      "relation": "ResolveProperty",
+      "entity": "Promise"
+    },
+    {
+      "name": "stations",
+      "relation": "ManyToMany",
+      "entity": "Station"
+    },
+    {
+      "name": "getStations",
+      "relation": "ResolveProperty",
+      "entity": "Promise"
+    },
+    {
+      "name": "loginLogs",
+      "relation": "OneToMany",
+      "entity": "UserLoginLog"
+    },
+    {
+      "name": "getUserLoginLogs",
+      "relation": "ResolveProperty",
+      "entity": "Promise"
+    },
+    {
+      "name": "safetyScoreLogs",
+      "relation": "OneToMany",
+      "entity": "SafetyScoreLog"
+    },
+    {
+      "name": "getSafetyScoreLogs",
+      "relation": "ResolveProperty",
+      "entity": "Promise"
+    },
+    {
+      "name": "createStations",
+      "relation": "OneToMany",
+      "entity": "Station"
+    },
+    {
+      "name": "getCreateStations",
+      "relation": "ResolveProperty",
+      "entity": "Promise"
+    }
+  ],
+  "ToDoItem": [
+    {
+      "name": "fromSystem",
+      "relation": "ManyToOne",
+      "entity": "System"
+    },
+    {
+      "name": "fromEvent",
+      "relation": "ManyToOne",
+      "entity": "SystemEvent"
+    },
+    {
+      "name": "fromUser",
+      "relation": "ManyToOne",
+      "entity": "User"
+    },
+    {
+      "name": "toUser",
+      "relation": "ManyToOne",
+      "entity": "User"
+    }
+  ],
+  "System": [
+    {
+      "name": "rights",
+      "relation": "OneToMany",
+      "entity": "SystemRight"
+    },
+    {
+      "name": "getSystemRights",
+      "relation": "ResolveProperty",
+      "entity": "Promise"
+    },
+    {
+      "name": "events",
+      "relation": "OneToMany",
+      "entity": "SystemEvent"
+    },
+    {
+      "name": "getSystemEvents",
+      "relation": "ResolveProperty",
+      "entity": "Promise"
+    },
+    {
+      "name": "toDoItems",
+      "relation": "OneToMany",
+      "entity": "ToDoItem"
+    },
+    {
+      "name": "getToDoItems",
+      "relation": "ResolveProperty",
+      "entity": "Promise"
+    }
+  ],
+  "SystemRight": [
+    {
+      "name": "fromSystem",
+      "relation": "ManyToOne",
+      "entity": "System"
+    },
+    {
+      "name": "toRoles",
+      "relation": "ManyToOne",
+      "entity": "Role"
+    }
+  ],
+  "Role": [
+    {
+      "name": "rights",
+      "relation": "OneToMany",
+      "entity": "SystemRight"
+    },
+    {
+      "name": "getSystemRights",
+      "relation": "ResolveProperty",
+      "entity": "Promise"
+    },
+    {
+      "name": "canUseStations",
+      "relation": "ManyToMany",
+      "entity": "Station"
+    },
+    {
+      "name": "group",
+      "relation": "ManyToOne",
+      "entity": "RoleGroup"
+    }
+  ],
+  "Station": [
+    {
+      "name": "createUser",
+      "relation": "ManyToOne",
+      "entity": "User"
+    },
+    {
+      "name": "department",
+      "relation": "ManyToOne",
+      "entity": "Department"
+    },
+    {
+      "name": "canUseRoles",
+      "relation": "ManyToMany",
+      "entity": "Role"
+    },
+    {
+      "name": "users",
+      "relation": "ManyToMany",
+      "entity": "User"
+    },
+    {
+      "name": "getUsers",
+      "relation": "ResolveProperty",
+      "entity": "Promise"
+    },
+    {
+      "name": "roleGroup",
+      "relation": "ManyToOne",
+      "entity": "RoleGroup"
+    }
+  ],
+  "Department": [
+    {
+      "name": "parent",
+      "relation": "ManyToOne",
+      "entity": "Department"
+    },
+    {
+      "name": "children",
+      "relation": "OneToMany",
+      "entity": "Department"
+    },
+    {
+      "name": "getChildren",
+      "relation": "ResolveProperty",
+      "entity": "Promise"
+    },
+    {
+      "name": "stations",
+      "relation": "OneToMany",
+      "entity": "Station"
+    },
+    {
+      "name": "getStations",
+      "relation": "ResolveProperty",
+      "entity": "Promise"
+    },
+    {
+      "name": "domain",
+      "relation": "ManyToOne",
+      "entity": "Domain"
+    }
+  ],
+  "Domain": [
+    {
+      "name": "departments",
+      "relation": "OneToMany",
+      "entity": "Department"
+    },
+    {
+      "name": "getDepartments",
+      "relation": "ResolveProperty",
+      "entity": "Promise"
+    }
+  ],
+  "RoleGroup": [
+    {
+      "name": "roles",
+      "relation": "OneToMany",
+      "entity": "Role"
+    },
+    {
+      "name": "getRoles",
+      "relation": "ResolveProperty",
+      "entity": "Promise"
+    },
+    {
+      "name": "stations",
+      "relation": "OneToMany",
+      "entity": "Station"
+    },
+    {
+      "name": "getStations",
+      "relation": "ResolveProperty",
+      "entity": "Promise"
+    }
+  ],
+  "SystemEvent": [
+    {
+      "name": "fromSystem",
+      "relation": "ManyToOne",
+      "entity": "System"
+    },
+    {
+      "name": "toDoItems",
+      "relation": "OneToMany",
+      "entity": "ToDoItem"
+    },
+    {
+      "name": "getToDoItems",
+      "relation": "ResolveProperty",
+      "entity": "Promise"
+    }
+  ],
+  "UserLoginLog": [
+    {
+      "name": "user",
+      "relation": "ManyToOne",
+      "entity": "User"
+    },
+    {
+      "name": "scoreLog",
+      "relation": "OneToOne",
+      "entity": "SafetyScoreLog"
+    }
+  ],
+  "SafetyScoreLog": [
+    {
+      "name": "loginLog",
+      "relation": "OneToOne",
+      "entity": "UserLoginLog"
+    },
+    {
+      "name": "rule",
+      "relation": "ManyToOne",
+      "entity": "SafetyScoreRule"
+    },
+    {
+      "name": "user",
+      "relation": "ManyToOne",
+      "entity": "User"
+    }
+  ],
+  "SafetyScoreRule": [
+    {
+      "name": "logs",
+      "relation": "OneToMany",
+      "entity": "SafetyScoreLog"
+    },
+    {
+      "name": "getSafetyScoreLogs",
+      "relation": "ResolveProperty",
+      "entity": "Promise"
+    }
+  ]
+}

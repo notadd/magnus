@@ -1,0 +1,202 @@
+package userCenter;
+syntax = "proto3";
+message Empty{
+}
+message User{
+	int32 id = 0;
+	string username = 1;
+	int32 status = 2;
+	string randomCode = 3;
+	bool isRestPassword = 4;
+	int32 safetyScore = 5;
+}
+message GetUserByUserNameResult{
+	string code = 0;
+	User data = 1;
+}
+message GetUserByUserNameInput{
+	string username = 0;
+}
+message VerifyUsernameAndPasswordAreCorrectResult{
+	bool ok = 0;
+	string jsonWebToken = 1;
+}
+message VerifyUsernameAndPasswordAreCorrectInput{
+	string username = 0;
+	string password = 1;
+}
+service UserCenterAuth {
+	rpc GetUserByUserName(GetUserByUserNameInput) returns(GetUserByUserNameResult) {}
+	rpc VerifyUsernameAndPasswordAreCorrect(VerifyUsernameAndPasswordAreCorrectInput) returns(VerifyUsernameAndPasswordAreCorrectResult) {}
+}
+message FindStationData{
+	int32 id = 0;
+	string positionTitle = 1;
+	string jobNumber = 2;
+	string jobDescription = 3;
+	repeated string haveRole = 4;
+	string createUserName = 5;
+	string createDate = 6;
+}
+message FindStationResult{
+	int32 code = 0;
+	string message = 1;
+	repeated FindStationData data = 2;
+}
+message FindStationInput{
+	int32 page = 0;
+	int32 psize = 1;
+	string positionTitle = 2;
+	string createUserUsername = 3;
+	Empty createDate = 4;
+}
+message DeleteStationResult{
+	int32 code = 0;
+	string message = 1;
+}
+message DeleteStationInput{
+	int32 id = 0;
+}
+message ForbidStationResult{
+	int32 code = 0;
+	string message = 1;
+}
+message ForbidStationInput{
+	int32 id = 0;
+}
+message GetStationData{
+	string department = 0;
+	string jobNumber = 1;
+	string positionTitle = 2;
+	string jobDescription = 3;
+	string jobResponsibilities = 4;
+	string jobRequirements = 5;
+	string roleGroup = 6;
+	int32 status = 7;
+}
+message GetStationResult{
+	int32 code = 0;
+	string message = 1;
+	GetStationData data = 2;
+}
+message GetStationInput{
+	int32 id = 0;
+}
+message GetAllStationData{
+	int32 id = 0;
+	string title = 1;
+}
+message GetAllStationByDepartmentResult{
+	int32 code = 0;
+	string message = 1;
+	repeated GetAllStationData data = 2;
+}
+message GetAllStationByDepartmentInput{
+	int32 departmentId = 0;
+}
+message GetAllUserData{
+	string title = 0;
+	string id = 1;
+}
+message GetAllUserByStationResult{
+	int32 code = 0;
+	string message = 1;
+	repeated GetAllUserData data = 2;
+}
+message GetAllUserByStationInput{
+	int32 stationId = 0;
+}
+service UserCenterStation {
+	rpc FindStation(FindStationInput) returns(FindStationResult) {}
+	rpc DeleteStation(DeleteStationInput) returns(DeleteStationResult) {}
+	rpc ForbidStation(ForbidStationInput) returns(ForbidStationResult) {}
+	rpc GetStation(GetStationInput) returns(GetStationResult) {}
+	rpc GetAllStartionByDepartment(GetAllStationByDepartmentInput) returns(GetAllStationByDepartmentResult) {}
+	rpc GetAllUserByStation(GetAllUserByStationInput) returns(GetAllUserByStationResult) {}
+}
+message SaveUserData{
+	int32 id = 0;
+	string username = 1;
+	string phoneNumber = 2;
+	string email = 3;
+	repeated string renGang = 4;
+	string bindingStaff = 5;
+}
+message SaveUserResult{
+	int32 code = 0;
+	string message = 1;
+	SaveUserData data = 2;
+}
+message SaveUserInput{
+	int32 id = 0;
+	string username = 1;
+	string phoneNumber = 2;
+	string email = 3;
+	repeated int32 renGang = 4;
+	int32 bindingStaff = 5;
+}
+message DeleteUserResult{
+	int32 code = 0;
+	string message = 1;
+}
+message DeleteUserInput{
+	int32 uid = 0;
+}
+message FindUserData{
+	int32 id = 0;
+	string username = 1;
+	string mobile = 2;
+	string departmentTitle = 3;
+	repeated string roles = 4;
+	int32 status = 5;
+	int32 createDate = 6;
+	string createUserName = 7;
+}
+message FindUserResult{
+	int32 code = 0;
+	string message = 1;
+	repeated FindUserData data = 2;
+}
+message FindUserInput{
+	int32 page = 0;
+	int32 psize = 1;
+	string username = 2;
+	string mobile = 3;
+	int32 status = 4;
+	int32 createUserId = 5;
+	int32 departmentId = 6;
+}
+message ForbidUserResult{
+	int32 code = 0;
+	string message = 1;
+}
+message ForbidUserInput{
+	int32 uid = 0;
+	int32 status = 1;
+}
+message GetUserResultData{
+	int32 id = 0;
+	string username = 1;
+	string phoneNumber = 2;
+	string email = 3;
+	repeated string renGang = 4;
+	string bindingStaff = 5;
+	int32 status = 6;
+	string createDate = 7;
+	string createUserUsername = 8;
+}
+message GetUserResult{
+	int32 code = 0;
+	string message = 1;
+	GetUserResultData data = 2;
+}
+message GetUserInput{
+	int32 id = 0;
+}
+service UserCenterUser {
+	rpc SaveUser(SaveUserInput) returns(SaveUserResult) {}
+	rpc DeleteUser(DeleteUserInput) returns(DeleteUserResult) {}
+	rpc FindUser(FindUserInput) returns(FindUserResult) {}
+	rpc ForbidUser(ForbidUserInput) returns(ForbidUserResult) {}
+	rpc GetUser(GetUserInput) returns(GetUserResult) {}
+}

@@ -1,0 +1,58 @@
+{
+	"name": "@notadd/magnus",
+	"version": "3.0.6",
+	"description": "> TODO: description",
+	"author": "imeepos <1037483576@qq.com>",
+	"homepage": "https://github.com/notadd/magnus/tree/master/libs/compiler#readme",
+	"license": "ISC",
+	"publishConfig": {
+		"access": "public"
+	},
+	"main": "lib/index.js",
+	"bin": {
+		"magnus": "./lib/bin.js"
+	},
+	"directories": {
+		"lib": "lib",
+		"test": "__tests__"
+	},
+	"files": [
+		"lib"
+	],
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/notadd/magnus.git"
+	},
+	"scripts": {
+		"test": "echo \"Error: run tests from root\" && exit 1"
+	},
+	"bugs": {
+		"url": "https://github.com/notadd/magnus/issues"
+	},
+	"gitHead": "3cdb10e40f409d0acd323e2b31297e40e747a8db",
+	"dependencies": {
+		"@nodeutils/defaults-deep": "^1.1.0",
+		"@notadd/magnus-core": "^3.0.1",
+		"@notadd/magnus-graphql": "^3.0.3",
+		"@notadd/magnus-grpc": "^3.0.1",
+		"chokidar": "^3.0.2",
+		"commander": "^2.20.0",
+		"fs-extra": "^8.0.1",
+		"graphql": "^14.4.2",
+		"graphql-tools": "^4.0.5",
+		"libp2p": "^0.25.5",
+		"libp2p-kad-dht": "^0.15.2",
+		"libp2p-mdns": "^0.12.3",
+		"libp2p-mplex": "^0.8.5",
+		"libp2p-secio": "^0.11.1",
+		"libp2p-spdy": "^0.13.3",
+		"libp2p-tcp": "^0.13.0",
+		"libp2p-websockets": "^0.12.2",
+		"lodash": "^4.17.11",
+		"peer-id": "^0.13.1",
+		"peer-info": "^0.16.0",
+		"ts-morph": "^3.1.0",
+		"tslib": "^1.10.0",
+		"typescript": "~3.5.3"
+	}
+}
