@@ -2,6 +2,10 @@
     <img style="margin: 0 auto;" width="220px" src="./logo.jpg"/>
 </p>
 
+## 相关插件及生态
+
+[magnus-plugins](https://github.com/meepobrother/magnus-plugins)
+
 ### 功能特点
 
 - 根据 Typescript 自动生成`.graphql`和`.proto`配置文件（灵活）
