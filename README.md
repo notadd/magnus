@@ -8,6 +8,11 @@
 
 ### 功能特点
 
+- 可生成@nestjs/graphql相应接口的`.graphql`文件，无缝对接
+- 可生成@nestjs/grpc相应的`.proto`文件，无缝对接
+- 编译生成，打包速度更小，速度更快
+- magnus去掉服务端，速度更快，更灵活!
+- 程序自动维护graphql和proto文件，无缝对接nestjs
 - 根据 Typescript 自动生成`.graphql`和`.proto`配置文件（灵活）
 - 生成自动支持按条件搜索、分页、排序的增删改查
 - 自动更新数据库结构
