@@ -2,9 +2,6 @@
     <img style="margin: 0 auto;" width="220px" src="./logo.jpg"/>
 </p>
 
-## 相关插件及生态
-
-[magnus-plugins](https://github.com/meepobrother/magnus-plugins)
 
 ### 功能特点
 
