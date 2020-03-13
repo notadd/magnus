@@ -40,7 +40,7 @@
 		"fs-extra": "^8.0.1",
 		"graphql": "^14.4.2",
 		"graphql-tools": "^4.0.5",
-		"libp2p": "^0.25.5",
+		"libp2p": "^0.27.3",
 		"libp2p-kad-dht": "^0.15.2",
 		"libp2p-mdns": "^0.12.3",
 		"libp2p-mplex": "^0.8.5",
