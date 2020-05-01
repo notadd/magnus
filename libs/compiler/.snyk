@@ -1,0 +1,156 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.14.1
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  SNYK-JS-LODASH-567746:
+    - lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - '@nodeutils/defaults-deep > lodash':
+        patched: '2020-05-01T06:16:39.071Z'
+    - '@notadd/magnus-core > @nestjs/graphql > lodash':
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p-kad-dht > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p-mdns > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p-mplex > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p-secio > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p-kad-dht > libp2p-crypto > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p-secio > libp2p-crypto > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p > libp2p-floodsub > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p > peer-id > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p-kad-dht > peer-id > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p-mdns > peer-id > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p-secio > peer-id > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p > libp2p-switch > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p-kad-dht > interface-datastore > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p-kad-dht > libp2p-record > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p > libp2p-connection-manager > latency-monitor > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p-kad-dht > libp2p-crypto > libp2p-crypto-secp256k1 > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p-secio > libp2p-crypto > libp2p-crypto-secp256k1 > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p > libp2p-floodsub > libp2p-crypto > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p > libp2p-ping > libp2p-crypto > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p > peer-id > libp2p-crypto > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p-kad-dht > peer-id > libp2p-crypto > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p-mdns > peer-id > libp2p-crypto > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p-secio > peer-id > libp2p-crypto > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p > libp2p-floodsub > libp2p-pubsub > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p > peer-info > peer-id > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p-kad-dht > peer-info > peer-id > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p-mdns > peer-info > peer-id > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p-secio > peer-info > peer-id > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p > libp2p-switch > peer-id > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p > peer-book > peer-id > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p > libp2p-switch > libp2p-circuit > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p > libp2p-switch > multistream-select > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - '@notadd/magnus-core > @nestjs/graphql > merge-graphql-schemas > @graphql-toolkit/schema-merging > @graphql-toolkit/common > lodash':
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p > libp2p-floodsub > libp2p-crypto > libp2p-crypto-secp256k1 > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p > libp2p-ping > libp2p-crypto > libp2p-crypto-secp256k1 > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p > peer-id > libp2p-crypto > libp2p-crypto-secp256k1 > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p-kad-dht > peer-id > libp2p-crypto > libp2p-crypto-secp256k1 > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p-mdns > peer-id > libp2p-crypto > libp2p-crypto-secp256k1 > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p-secio > peer-id > libp2p-crypto > libp2p-crypto-secp256k1 > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p > libp2p-floodsub > libp2p-pubsub > libp2p-crypto > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p > peer-info > peer-id > libp2p-crypto > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p-kad-dht > peer-info > peer-id > libp2p-crypto > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p-mdns > peer-info > peer-id > libp2p-crypto > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p-secio > peer-info > peer-id > libp2p-crypto > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p > libp2p-switch > peer-id > libp2p-crypto > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p > peer-book > peer-id > libp2p-crypto > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p > libp2p-switch > peer-info > peer-id > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p > peer-book > peer-info > peer-id > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p > libp2p-switch > libp2p-circuit > peer-id > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p > libp2p-switch > libp2p-identify > peer-id > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p > libp2p-floodsub > libp2p-pubsub > libp2p-crypto > libp2p-crypto-secp256k1 > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p > peer-info > peer-id > libp2p-crypto > libp2p-crypto-secp256k1 > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p-kad-dht > peer-info > peer-id > libp2p-crypto > libp2p-crypto-secp256k1 > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p-mdns > peer-info > peer-id > libp2p-crypto > libp2p-crypto-secp256k1 > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p-secio > peer-info > peer-id > libp2p-crypto > libp2p-crypto-secp256k1 > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p > libp2p-switch > peer-id > libp2p-crypto > libp2p-crypto-secp256k1 > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p > peer-book > peer-id > libp2p-crypto > libp2p-crypto-secp256k1 > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p > libp2p-switch > peer-info > peer-id > libp2p-crypto > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p > peer-book > peer-info > peer-id > libp2p-crypto > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p > libp2p-switch > libp2p-circuit > peer-id > libp2p-crypto > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p > libp2p-switch > libp2p-identify > peer-id > libp2p-crypto > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p > libp2p-switch > libp2p-circuit > peer-info > peer-id > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p > libp2p-switch > libp2p-identify > peer-info > peer-id > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p > libp2p-switch > peer-info > peer-id > libp2p-crypto > libp2p-crypto-secp256k1 > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p > peer-book > peer-info > peer-id > libp2p-crypto > libp2p-crypto-secp256k1 > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p > libp2p-switch > libp2p-circuit > peer-id > libp2p-crypto > libp2p-crypto-secp256k1 > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p > libp2p-switch > libp2p-identify > peer-id > libp2p-crypto > libp2p-crypto-secp256k1 > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p > libp2p-switch > libp2p-circuit > peer-info > peer-id > libp2p-crypto > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p > libp2p-switch > libp2p-identify > peer-info > peer-id > libp2p-crypto > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p > libp2p-switch > libp2p-circuit > peer-info > peer-id > libp2p-crypto > libp2p-crypto-secp256k1 > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
+    - libp2p > libp2p-switch > libp2p-identify > peer-info > peer-id > libp2p-crypto > libp2p-crypto-secp256k1 > async > lodash:
+        patched: '2020-05-01T06:16:39.071Z'
